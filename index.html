@@ -100,311 +100,163 @@
         }
     </style>
 <style>
-    .mp-section{
-      --bg1:#f6f9ff;
-      --bg2:#eef3ff;
-      --ink:#0b1324;
-      --muted:#5b677a;
-      --card:#ffffff;
-      --stroke:rgba(15, 23, 42, .10);
-      --shadow: 0 18px 40px rgba(16, 24, 40, .12);
-      --shadow2: 0 10px 22px rgba(16, 24, 40, .10);
-      --radius: 22px;
-      --accent:#5b7cff;
-      --accent2:#7c5cff;
-      --ease: cubic-bezier(.2,.9,.2,1);
+.video-section{
+  background:#ffffff;
+  padding:110px 24px 100px;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  color:#0b1324;
+}
 
-      color: var(--ink);
-      background:
-        radial-gradient(900px 500px at 18% 30%, rgba(91,124,255,.10), transparent 60%),
-        radial-gradient(800px 450px at 90% 20%, rgba(124,92,255,.10), transparent 55%),
-        linear-gradient(180deg, var(--bg1), var(--bg2));
-      border-radius: 26px;
-      padding: 54px 22px 64px;
-    }
+.video-container{
+  max-width:1200px;
+  margin:0 auto;
+}
 
-    .mp-wrap{
-      max-width: 1180px;
-      margin: 0 auto;
-    }
+/* HEADER */
+.video-header{
+  text-align:center;
+  max-width:720px;
+  margin:0 auto;
+}
 
-    .mp-top{
-      display:flex;
-      align-items:flex-start;
-      justify-content:space-between;
-      gap:24px;
-      flex-wrap:wrap;
-    }
+.video-kicker{
+  font-size:12px;
+  font-weight:700;
+  letter-spacing:.18em;
+  color:#5b7cff;
+  margin-bottom:16px;
+}
 
-    .mp-kicker{
-      letter-spacing:.14em;
-      text-transform:uppercase;
-      font-weight:800;
-      font-size:12px;
-      color: rgba(91,124,255,.95);
-      margin: 6px 0 10px;
-      display:inline-block;
-      position:relative;
-    }
-    .mp-kicker::after{
-      content:"";
-      position:absolute;
-      left:0;
-      bottom:-10px;
-      width:42px;
-      height:3px;
-      border-radius:99px;
-      background: linear-gradient(90deg, var(--accent), var(--accent2));
-      opacity:.55;
-    }
+.video-title{
+  font-size:clamp(36px,4.5vw,56px);
+  font-weight:800;
+  letter-spacing:-0.03em;
+  margin:0 0 18px;
+}
 
-    .mp-h{
-      font-size: clamp(30px, 3.8vw, 52px);
-      line-height: 1.06;
-      margin: 0 0 12px;
-      letter-spacing: -0.02em;
-    }
+.video-desc{
+  font-size:17px;
+  line-height:1.8;
+  color:#5b677a;
+  margin:0;
+}
 
-    .mp-lead{
-      color: var(--muted);
-      font-size: 16px;
-      line-height: 1.7;
-      margin: 0;
-      max-width: 520px;
-    }
+.video-btn{
+  display:inline-block;
+  margin-top:36px;
+  padding:14px 22px;
+  border-radius:999px;
+  border:1px solid rgba(0,0,0,.12);
+  text-decoration:none;
+  font-weight:700;
+  color:#0b1324;
+  transition:.25s ease;
+}
 
-    .mp-cta{
-      margin-top: 10px;
-    }
+.video-btn:hover{
+  transform:translateY(-2px);
+  box-shadow:0 14px 30px rgba(0,0,0,.12);
+}
 
-    .mp-btn{
-      display:inline-flex;
-      align-items:center;
-      gap:10px;
-      border:1px solid rgba(15, 23, 42, .10);
-      background: rgba(255,255,255,.75);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      padding: 14px 18px;
-      border-radius: 999px;
-      color: var(--ink);
-      font-weight: 700;
-      text-decoration:none;
-      box-shadow: 0 10px 22px rgba(16,24,40,.08);
-      transition: transform .25s var(--ease), box-shadow .25s var(--ease), border-color .25s var(--ease);
-    }
-    .mp-btn:hover{
-      transform: translateY(-2px);
-      box-shadow: 0 18px 38px rgba(16,24,40,.12);
-      border-color: rgba(91,124,255,.35);
-    }
-    .mp-btn:active{ transform: translateY(0) scale(.99); }
-    .mp-arrow{ transition: transform .25s var(--ease); }
-    .mp-btn:hover .mp-arrow{ transform: translateX(2px); }
+/* GRID */
+.video-grid{
+  margin-top:90px;
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:32px;
+}
 
-    .mp-grid{
-      margin-top: 44px;
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 28px;
-    }
-    @media (max-width: 860px){
-      .mp-grid{ grid-template-columns: 1fr; }
-      .mp-lead{ max-width: unset; }
-    }
+@media(max-width:900px){
+  .video-grid{
+    grid-template-columns:1fr;
+  }
+}
 
-    .mp-card{
-      background: var(--card);
-      border: 1px solid var(--stroke);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow2);
-      overflow:hidden;
-      transition: transform .35s var(--ease), box-shadow .35s var(--ease), border-color .35s var(--ease);
-    }
-    .mp-card:hover{
-      transform: translateY(-6px);
-      box-shadow: var(--shadow);
-      border-color: rgba(91,124,255,.22);
-    }
+/* CARD */
+.video-card{
+  background:#fff;
+  border-radius:22px;
+  overflow:hidden;
+  box-shadow:0 12px 30px rgba(0,0,0,.10);
+  transition:.35s ease;
+  text-decoration:none;
+  color:inherit;
+}
 
-    .mp-cardBtn{
-      all: unset;
-      cursor:pointer;
-      display:block;
-    }
-    .mp-cardBtn:focus-visible{
-      outline: 3px solid rgba(91,124,255,.45);
-      outline-offset: 6px;
-      border-radius: calc(var(--radius) + 6px);
-    }
+.video-card:hover{
+  transform:translateY(-8px);
+  box-shadow:0 24px 50px rgba(0,0,0,.16);
+}
 
-    .mp-thumb{
-      position:relative;
-      aspect-ratio: 16/9;
-      overflow:hidden;
-      background: #dbe6ff;
-    }
-    .mp-thumb img{
-      width:100%;
-      height:100%;
-      object-fit:cover;
-      display:block;
-      transform: scale(1.02);
-      transition: transform .6s var(--ease), filter .6s var(--ease);
-      filter: saturate(1.05) contrast(1.02);
-    }
-    .mp-card:hover .mp-thumb img{
-      transform: scale(1.075);
-      filter: saturate(1.15) contrast(1.06);
-    }
+.video-thumb{
+  position:relative;
+  aspect-ratio:16/9;
+  overflow:hidden;
+}
 
-    .mp-play{
-      position:absolute;
-      inset:0;
-      display:grid;
-      place-items:center;
-      pointer-events:none;
-    }
-    .mp-pill{
-      width:70px; height:70px;
-      border-radius:999px;
-      background: rgba(255,255,255,.92);
-      border: 1px solid rgba(15,23,42,.12);
-      box-shadow: 0 18px 30px rgba(15,23,42,.14);
-      display:grid;
-      place-items:center;
-      transition: transform .35s var(--ease), box-shadow .35s var(--ease);
-    }
-    .mp-card:hover .mp-pill{
-      transform: translateY(-2px) scale(1.02);
-      box-shadow: 0 26px 44px rgba(15,23,42,.18);
-    }
-    .mp-pill svg{
-      width:20px; height:20px;
-      margin-left:3px;
-      fill: var(--accent);
-      filter: drop-shadow(0 3px 10px rgba(91,124,255,.35));
-    }
+.video-thumb img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  transition:.6s ease;
+}
 
-    .mp-duration{
-      position:absolute;
-      right: 14px;
-      bottom: 12px;
-      font-size: 12px;
-      font-weight: 800;
-      color: rgba(255,255,255,.95);
-      background: rgba(0,0,0,.55);
-      border: 1px solid rgba(255,255,255,.18);
-      padding: 6px 9px;
-      border-radius: 10px;
-      backdrop-filter: blur(6px);
-      -webkit-backdrop-filter: blur(6px);
-    }
+.video-card:hover img{
+  transform:scale(1.08);
+}
 
-    .mp-body{
-      padding: 18px 22px 22px;
-      display:flex;
-      align-items:flex-start;
-      justify-content:space-between;
-      gap:16px;
-    }
-    .mp-title{
-      font-size: 22px;
-      margin: 2px 0 8px;
-      letter-spacing: -.01em;
-    }
-    .mp-desc{
-      margin:0;
-      color: var(--muted);
-      line-height:1.7;
-      font-size: 14.5px;
-      max-width: 460px;
-    }
-    .mp-badge{
-      flex:0 0 auto;
-      align-self:flex-start;
-      font-size: 12px;
-      font-weight: 900;
-      letter-spacing: .06em;
-      padding: 7px 10px;
-      border-radius: 999px;
-      color: rgba(91,124,255,.95);
-      background: rgba(91,124,255,.10);
-      border: 1px solid rgba(91,124,255,.22);
-      transform: translateY(2px);
-    }
+.video-play{
+  position:absolute;
+  inset:0;
+  display:grid;
+  place-items:center;
+}
 
-    /* Modal */
-    .mp-modal{
-      position: fixed;
-      inset: 0;
-      display:none;
-      place-items:center;
-      padding: 22px;
-      z-index: 9999;
-      background: rgba(10, 14, 25, .55);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-    }
-    .mp-modal[aria-hidden="false"]{ display:grid; }
+.video-play span{
+  width:70px;
+  height:70px;
+  background:#fff;
+  border-radius:50%;
+  display:grid;
+  place-items:center;
+  box-shadow:0 12px 30px rgba(0,0,0,.25);
+}
 
-    .mp-panel{
-      width: min(980px, 96vw);
-      border-radius: 18px;
-      overflow:hidden;
-      border: 1px solid rgba(255,255,255,.18);
-      box-shadow: 0 35px 80px rgba(0,0,0,.35);
-      background: #0a0f1f;
-      transform: translateY(6px) scale(.99);
-      animation: mpPop .28s var(--ease) forwards;
-    }
-    @keyframes mpPop{
-      to{ transform: translateY(0) scale(1); }
-    }
-    .mp-modalTop{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:12px;
-      padding: 14px 14px 12px;
-      background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.02));
-      color: rgba(255,255,255,.92);
-      font-weight: 700;
-    }
-    .mp-modalTop small{ color: rgba(255,255,255,.70); font-weight:500; }
+.video-play svg{
+  width:22px;
+  margin-left:3px;
+  fill:#5b7cff;
+}
 
-    .mp-modalTitle{ font-weight: 800; }
+.video-time{
+  position:absolute;
+  right:14px;
+  bottom:12px;
+  background:rgba(0,0,0,.6);
+  color:#fff;
+  font-size:12px;
+  font-weight:700;
+  padding:6px 10px;
+  border-radius:10px;
+}
 
-    .mp-close{
-      appearance:none;
-      border: 1px solid rgba(255,255,255,.18);
-      background: rgba(255,255,255,.08);
-      color: rgba(255,255,255,.92);
-      border-radius: 12px;
-      padding: 10px 12px;
-      cursor:pointer;
-      transition: transform .2s var(--ease), background .2s var(--ease), border-color .2s var(--ease);
-      font-weight: 700;
-    }
-    .mp-close:hover{
-      transform: translateY(-1px);
-      background: rgba(255,255,255,.12);
-      border-color: rgba(255,255,255,.28);
-    }
-    .mp-close:active{ transform: translateY(0) scale(.99); }
+.video-body{
+  padding:22px 24px 26px;
+}
 
-    .mp-player{
-      position:relative;
-      aspect-ratio: 16/9;
-      background:#000;
-    }
-    .mp-player iframe{
-      width:100%;
-      height:100%;
-      border:0;
-      display:block;
-    }
-  </style>
+.video-body h3{
+  margin:0 0 10px;
+  font-size:22px;
+}
+
+.video-body p{
+  margin:0;
+  color:#5b677a;
+  font-size:15px;
+  line-height:1.7;
+}
+</style>
+
 </head>
 <body class="bg-white text-slate-800 antialiased selection:bg-primary selection:text-white">
 
@@ -580,105 +432,68 @@
         </div>
     </section>
 
-<section class="mp-section" aria-label="Montaż i postprodukcja">
-  <div class="mp-wrap">
-    <header class="mp-top">
-      <div>
-        <div class="mp-kicker">STUDIO VIDEO</div>
-        <h2 class="mp-h">Montaż &amp; Postprodukcja</h2>
-        <p class="mp-lead">
-          Tworzę dynamiczne historie, które zatrzymują uwagę widza. Kliknij w miniaturę, aby zobaczyć przykładowe realizacje.
-        </p>
-      </div>
+<section class="video-section">
+  <div class="video-container">
 
-      <div class="mp-cta">
-        <a class="mp-btn" href="https://www.youtube.com/" target="_blank" rel="noopener">
-          Zobacz kanał YouTube
-          <span class="mp-arrow" aria-hidden="true">→</span>
-        </a>
-      </div>
-    </header>
+    <!-- HEADER -->
+    <div class="video-header">
+      <div class="video-kicker">STUDIO VIDEO</div>
+      <h2 class="video-title">Montaż &amp; Postprodukcja</h2>
+      <p class="video-desc">
+        Tworzę dynamiczne historie, które zatrzymują uwagę widza.
+        Kliknij w miniaturę, aby zobaczyć przykładowe realizacje.
+      </p>
 
-    <div class="mp-grid">
-      <!-- KARTA 1: tutaj wklejasz osobny link do YouTube -->
-      <article class="mp-card">
-        <button class="mp-cardBtn"
-          type="button"
-          data-title="Reklama Produktowa"
-          data-video="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
-          aria-label="Odtwórz: Reklama Produktowa">
-          <div class="mp-thumb">
-            <img
-              src="https://images.unsplash.com/photo-1526481280695-3c687fd643ed?auto=format&fit=crop&w=1600&q=80"
-              alt="Miniatura filmu: Reklama Produktowa"
-              loading="lazy" />
-
-            <div class="mp-play" aria-hidden="true">
-              <div class="mp-pill">
-                <svg viewBox="0 0 24 24"><path d="M9 18V6l12 6-12 6Z"/></svg>
-              </div>
-            </div>
-
-            <div class="mp-duration">02:45</div>
-          </div>
-
-          <div class="mp-body">
-            <div>
-              <h3 class="mp-title">Reklama Produktowa</h3>
-              <p class="mp-desc">
-                Kompleksowy montaż, color grading oraz sound design dla marki odzieżowej. Dynamiczne cięcia dopasowane do muzyki.
-              </p>
-            </div>
-            <div class="mp-badge">4K</div>
-          </div>
-        </button>
-      </article>
-
-      <!-- KARTA 2: osobny link do YouTube -->
-      <article class="mp-card">
-        <button class="mp-cardBtn"
-          type="button"
-          data-title="Vlog Podróżniczy"
-          data-video="https://www.youtube.com/watch?v=mcd8c6uDkpg&t=24s"
-          aria-label="Odtwórz: Vlog Podróżniczy">
-          <div class="mp-thumb">
-            <img
-              src="https://images.unsplash.com/photo-1500375592092-40eb2168fd21?auto=format&fit=crop&w=1600&q=80"
-              alt="Miniatura filmu: Vlog Podróżniczy"
-              loading="lazy" />
-
-            <div class="mp-play" aria-hidden="true">
-              <div class="mp-pill">
-                <svg viewBox="0 0 24 24"><path d="M9 18V6l12 6-12 6Z"/></svg>
-              </div>
-            </div>
-
-            <div class="mp-duration">10:12</div>
-          </div>
-
-          <div class="mp-body">
-            <div>
-              <h3 class="mp-title">Vlog Podróżniczy</h3>
-              <p class="mp-desc">
-                Storytelling wizualny z podróży do Japonii. Zaawansowane efekty przejść i stabilizacja obrazu.
-              </p>
-            </div>
-            <div class="mp-badge">FHD</div>
-          </div>
-        </button>
-      </article>
+      <a href="https://www.youtube.com/" target="_blank" class="video-btn">
+        Zobacz kanał YouTube →
+      </a>
     </div>
-  </div>
-  <div class="mp-modal" id="mp-modal" aria-hidden="true" role="dialog" aria-modal="true">
-    <div class="mp-panel" role="document">
-      <div class="mp-modalTop">
-        <div>
-          <div class="mp-modalTitle" id="mp-modalTitle">Wideo</div>
-          <small>Kliknij poza oknem lub ESC, aby zamknąć</small>
+
+    <!-- GRID -->
+    <div class="video-grid">
+
+      <!-- KARTA 1 -->
+      <a class="video-card"
+         href="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+         target="_blank">
+
+        <div class="video-thumb">
+          <img src="https://images.unsplash.com/photo-1526481280695-3c687fd643ed?auto=format&fit=crop&w=1600&q=80" alt="">
+          <div class="video-play">
+            <span>
+              <svg viewBox="0 0 24 24"><path d="M9 18V6l12 6-12 6Z"/></svg>
+            </span>
+          </div>
+          <div class="video-time">02:45</div>
         </div>
-        <button class="mp-close" id="mp-close" type="button" aria-label="Zamknij">Zamknij ✕</button>
-      </div>
-      <div class="mp-player" id="mp-player"></div>
+
+        <div class="video-body">
+          <h3>Reklama Produktowa</h3>
+          <p>Dynamiczny montaż, color grading i sound design dopasowany do muzyki.</p>
+        </div>
+      </a>
+
+      <!-- KARTA 2 -->
+      <a class="video-card"
+         href="https://www.youtube.com/watch?v=aqz-KE-bpKQ"
+         target="_blank">
+
+        <div class="video-thumb">
+          <img src="https://images.unsplash.com/photo-1500375592092-40eb2168fd21?auto=format&fit=crop&w=1600&q=80" alt="">
+          <div class="video-play">
+            <span>
+              <svg viewBox="0 0 24 24"><path d="M9 18V6l12 6-12 6Z"/></svg>
+            </span>
+          </div>
+          <div class="video-time">10:12</div>
+        </div>
+
+        <div class="video-body">
+          <h3>Vlog Podróżniczy</h3>
+          <p>Storytelling wizualny z podróży. Stabilizacja obrazu i rytmiczne cięcia.</p>
+        </div>
+      </a>
+
     </div>
   </div>
 </section>
