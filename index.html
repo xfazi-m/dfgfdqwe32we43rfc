@@ -99,163 +99,297 @@
             -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
         }
     </style>
-<style>
-.video-section{
-  background:#ffffff;
-  padding:110px 24px 100px;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  color:#0b1324;
-}
+  <style>
+    :root{
+      --bg: #f3f6ff;
+      --bg2:#ffffff;
+      --text:#0b1220;
+      --muted:#556070;
+      --brand:#4f46e5;
+      --shadow: 0 22px 55px rgba(15, 23, 42, 0.14);
+      --shadow2: 0 10px 30px rgba(15, 23, 42, 0.14);
+      --radius: 22px;
+    }
 
-.video-container{
-  max-width:1200px;
-  margin:0 auto;
-}
+    *{ box-sizing: border-box; }
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      color:var(--text);
+      background:
+        radial-gradient(1200px 600px at 15% 0%, #ffffff 0%, rgba(255,255,255,0) 60%),
+        radial-gradient(900px 500px at 100% 20%, #e8efff 0%, rgba(232,239,255,0) 65%),
+        var(--bg);
+    }
 
-/* HEADER */
-.video-header{
-  text-align:center;
-  max-width:720px;
-  margin:0 auto;
-}
+    .container{
+      width:min(1160px, 92vw);
+      margin: 0 auto;
+      padding: 80px 0;
+    }
 
-.video-kicker{
-  font-size:12px;
-  font-weight:700;
-  letter-spacing:.18em;
-  color:#5b7cff;
-  margin-bottom:16px;
-}
+    /* --- Header sekcji --- */
+    .section{
+      background: linear-gradient(180deg, rgba(255,255,255,0.75), rgba(255,255,255,0.55));
+      border-radius: 34px;
+      padding: 62px 56px;
+      box-shadow: 0 1px 0 rgba(15,23,42,.06), 0 30px 80px rgba(15,23,42,.08);
+      backdrop-filter: blur(6px);
+    }
 
-.video-title{
-  font-size:clamp(36px,4.5vw,56px);
-  font-weight:800;
-  letter-spacing:-0.03em;
-  margin:0 0 18px;
-}
+    .kicker{
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      font-weight: 700;
+      font-size: 12px;
+      color: var(--brand);
+      margin: 0 0 14px 0;
+    }
 
-.video-desc{
-  font-size:17px;
-  line-height:1.8;
-  color:#5b677a;
-  margin:0;
-}
+    .headlineRow{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap: 28px;
+      flex-wrap: wrap;
+      margin-bottom: 34px;
+    }
 
-.video-btn{
-  display:inline-block;
-  margin-top:36px;
-  padding:14px 22px;
-  border-radius:999px;
-  border:1px solid rgba(0,0,0,.12);
-  text-decoration:none;
-  font-weight:700;
-  color:#0b1324;
-  transition:.25s ease;
-}
+    h2{
+      margin:0;
+      font-size: clamp(34px, 4vw, 54px);
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+    }
 
-.video-btn:hover{
-  transform:translateY(-2px);
-  box-shadow:0 14px 30px rgba(0,0,0,.12);
-}
+    .subtext{
+      margin: 14px 0 0 0;
+      color: var(--muted);
+      max-width: 54ch;
+      font-size: 16px;
+      line-height: 1.7;
+    }
 
-/* GRID */
-.video-grid{
-  margin-top:90px;
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:32px;
-}
+    .cta{
+      margin-top: 6px;
+      display:inline-flex;
+      align-items:center;
+      gap: 10px;
+      padding: 14px 18px;
+      background: rgba(255,255,255,0.95);
+      border: 1px solid rgba(15,23,42,.08);
+      border-radius: 999px;
+      text-decoration: none;
+      color: var(--text);
+      font-weight: 700;
+      box-shadow: 0 10px 25px rgba(15,23,42,0.10);
+      transition: transform .18s ease, box-shadow .18s ease;
+      white-space: nowrap;
+    }
+    .cta:hover{
+      transform: translateY(-1px);
+      box-shadow: 0 14px 30px rgba(15,23,42,0.14);
+    }
+    .cta span{
+      opacity:.8;
+      font-weight: 900;
+    }
 
-@media(max-width:900px){
-  .video-grid{
-    grid-template-columns:1fr;
-  }
-}
+    /* --- Grid kart --- */
+    .grid{
+      display:grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 26px;
+    }
+    .card{
+      grid-column: span 6;
+      background: var(--bg2);
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow2);
+      border: 1px solid rgba(15,23,42,.06);
+      transition: transform .2s ease, box-shadow .2s ease;
+      cursor: pointer;
+    }
+    .card:hover{
+      transform: translateY(-3px);
+      box-shadow: var(--shadow);
+    }
+    @media (max-width: 920px){
+      .section{ padding: 44px 22px; }
+      .card{ grid-column: span 12; }
+    }
 
-/* CARD */
-.video-card{
-  background:#fff;
-  border-radius:22px;
-  overflow:hidden;
-  box-shadow:0 12px 30px rgba(0,0,0,.10);
-  transition:.35s ease;
-  text-decoration:none;
-  color:inherit;
-}
+    /* --- Miniatura + overlay play --- */
+    .thumbWrap{
+      position: relative;
+      aspect-ratio: 16 / 9;
+      background: #0b1220;
+      overflow:hidden;
+    }
+    .thumb{
+      width:100%;
+      height:100%;
+      object-fit: cover;
+      display:block;
+      transform: scale(1.01);
+      transition: transform .35s ease, filter .35s ease;
+      filter: saturate(1.02);
+    }
+    .card:hover .thumb{
+      transform: scale(1.04);
+      filter: saturate(1.08) contrast(1.02);
+    }
 
-.video-card:hover{
-  transform:translateY(-8px);
-  box-shadow:0 24px 50px rgba(0,0,0,.16);
-}
+    .playOverlay{
+      position:absolute;
+      inset:0;
+      display:grid;
+      place-items:center;
+      background: radial-gradient(450px 220px at 50% 50%, rgba(0,0,0,.18), rgba(0,0,0,.45));
+      opacity: 0;
+      transition: opacity .2s ease;
+    }
+    .card:hover .playOverlay{ opacity: 1; }
 
-.video-thumb{
-  position:relative;
-  aspect-ratio:16/9;
-  overflow:hidden;
-}
+    .playBtn{
+      width: 72px;
+      height: 72px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.92);
+      border: 1px solid rgba(15,23,42,.08);
+      box-shadow: 0 20px 45px rgba(0,0,0,0.25);
+      display:grid;
+      place-items:center;
+      transform: translateY(6px);
+      transition: transform .2s ease;
+    }
+    .card:hover .playBtn{ transform: translateY(0); }
 
-.video-thumb img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  transition:.6s ease;
-}
+    .playTriangle{
+      width:0; height:0;
+      border-left: 16px solid var(--brand);
+      border-top: 10px solid transparent;
+      border-bottom: 10px solid transparent;
+      margin-left: 4px;
+    }
 
-.video-card:hover img{
-  transform:scale(1.08);
-}
+    .duration{
+      position:absolute;
+      right: 14px;
+      bottom: 12px;
+      background: rgba(0,0,0,.72);
+      color:#fff;
+      font-weight: 800;
+      font-size: 12px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      letter-spacing: .02em;
+    }
 
-.video-play{
-  position:absolute;
-  inset:0;
-  display:grid;
-  place-items:center;
-}
+    /* --- Treść karty --- */
+    .cardBody{
+      padding: 20px 22px 22px;
+      display:flex;
+      gap: 14px;
+      align-items:flex-start;
+      justify-content: space-between;
+    }
 
-.video-play span{
-  width:70px;
-  height:70px;
-  background:#fff;
-  border-radius:50%;
-  display:grid;
-  place-items:center;
-  box-shadow:0 12px 30px rgba(0,0,0,.25);
-}
+    .cardTitle{
+      margin: 0 0 6px 0;
+      font-size: 22px;
+      letter-spacing: -0.01em;
+    }
+    .cardDesc{
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.65;
+      font-size: 14.5px;
+      max-width: 64ch;
+    }
 
-.video-play svg{
-  width:22px;
-  margin-left:3px;
-  fill:#5b7cff;
-}
+    .badge{
+      margin-top: 2px;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-width: 46px;
+      height: 26px;
+      padding: 0 10px;
+      border-radius: 999px;
+      font-weight: 900;
+      font-size: 12px;
+      letter-spacing: .02em;
+      border: 1px solid rgba(79,70,229,.22);
+      color: var(--brand);
+      background: rgba(79,70,229,.08);
+      white-space: nowrap;
+    }
 
-.video-time{
-  position:absolute;
-  right:14px;
-  bottom:12px;
-  background:rgba(0,0,0,.6);
-  color:#fff;
-  font-size:12px;
-  font-weight:700;
-  padding:6px 10px;
-  border-radius:10px;
-}
+    /* --- Modal --- */
+    .modal{
+      position: fixed;
+      inset: 0;
+      display:none;
+      z-index: 50;
+    }
+    .modal.isOpen{ display:block; }
 
-.video-body{
-  padding:22px 24px 26px;
-}
+    .modalBackdrop{
+      position:absolute;
+      inset:0;
+      background: rgba(2,6,23,.60);
+      backdrop-filter: blur(4px);
+    }
 
-.video-body h3{
-  margin:0 0 10px;
-  font-size:22px;
-}
+    .modalPanel{
+      position: relative;
+      width: min(980px, 92vw);
+      margin: 7vh auto 0;
+      background: #0b1220;
+      border-radius: 18px;
+      overflow:hidden;
+      box-shadow: 0 30px 120px rgba(0,0,0,.45);
+      border: 1px solid rgba(255,255,255,.10);
+    }
 
-.video-body p{
-  margin:0;
-  color:#5b677a;
-  font-size:15px;
-  line-height:1.7;
-}
-</style>
+    .modalTop{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap: 12px;
+      padding: 14px 16px;
+      background: rgba(255,255,255,.06);
+      color: rgba(255,255,255,.92);
+      font-weight: 800;
+    }
+
+    .closeBtn{
+      border: 1px solid rgba(255,255,255,.16);
+      background: rgba(255,255,255,.08);
+      color: rgba(255,255,255,.92);
+      border-radius: 10px;
+      padding: 10px 12px;
+      font-weight: 900;
+      cursor:pointer;
+    }
+    .closeBtn:hover{
+      background: rgba(255,255,255,.12);
+    }
+
+    .playerWrap{
+      aspect-ratio: 16/9;
+      width:100%;
+      background:#000;
+    }
+    .playerWrap iframe{
+      width:100%;
+      height:100%;
+      border:0;
+      display:block;
+    }
+  </style>
 
 </head>
 <body class="bg-white text-slate-800 antialiased selection:bg-primary selection:text-white">
@@ -431,72 +565,104 @@
             </div>
         </div>
     </section>
+    <section class="section" id="montaz">
+      <div class="headlineRow">
+        <div>
+          <p class="kicker">STUDIO WIDEO</p>
+          <h2>Montaż &amp; Postprodukcja</h2>
+          <p class="subtext">
+            Tworzę dynamiczne historie, które zatrzymują uwagę widza. Kliknij w miniaturę, aby zobaczyć przykładowe realizacje.
+          </p>
+        </div>
 
-<section class="video-section">
-  <div class="video-container">
+        <!-- opcjonalnie: link do kanału -->
+        <a class="cta" href="https://www.youtube.com/" target="_blank" rel="noopener">
+          Zobacz kanał YouTube <span>→</span>
+        </a>
+      </div>
 
-    <!-- HEADER -->
-    <div class="video-header">
-      <div class="video-kicker">STUDIO VIDEO</div>
-      <h2 class="video-title">Montaż &amp; Postprodukcja</h2>
-      <p class="video-desc">
-        Tworzę dynamiczne historie, które zatrzymują uwagę widza.
-        Kliknij w miniaturę, aby zobaczyć przykładowe realizacje.
-      </p>
+      <!-- VIDEO LIST: dodawaj kolejne karty kopiując <article class="card"> -->
+      <div class="grid">
 
-      <a href="https://www.youtube.com/" target="_blank" class="video-btn">
-        Zobacz kanał YouTube →
-      </a>
-    </div>
-
-    <!-- GRID -->
-    <div class="video-grid">
-
-      <!-- KARTA 1 -->
-      <a class="video-card"
-         href="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
-         target="_blank">
-
-        <div class="video-thumb">
-          <img src="https://images.unsplash.com/photo-1526481280695-3c687fd643ed?auto=format&fit=crop&w=1600&q=80" alt="">
-          <div class="video-play">
-            <span>
-              <svg viewBox="0 0 24 24"><path d="M9 18V6l12 6-12 6Z"/></svg>
-            </span>
+        <article class="card"
+          data-title="Reklama Produktowa"
+          data-youtube="dQw4w9WgXcQ"
+          aria-label="Odtwórz: Reklama Produktowa"
+          role="button"
+          tabindex="0"
+        >
+          <div class="thumbWrap">
+            <!-- Miniaturka: wstaw swój link -->
+            <img class="thumb" src="https://images.unsplash.com/photo-1526481280695-3c687fd643ed?auto=format&fit=crop&w=1600&q=80" alt="Reklama Produktowa – miniaturka" />
+            <div class="playOverlay" aria-hidden="true">
+              <div class="playBtn"><div class="playTriangle"></div></div>
+            </div>
+            <div class="duration">02:45</div>
           </div>
-          <div class="video-time">02:45</div>
-        </div>
 
-        <div class="video-body">
-          <h3>Reklama Produktowa</h3>
-          <p>Dynamiczny montaż, color grading i sound design dopasowany do muzyki.</p>
-        </div>
-      </a>
-
-      <!-- KARTA 2 -->
-      <a class="video-card"
-         href="https://www.youtube.com/watch?v=aqz-KE-bpKQ"
-         target="_blank">
-
-        <div class="video-thumb">
-          <img src="https://images.unsplash.com/photo-1500375592092-40eb2168fd21?auto=format&fit=crop&w=1600&q=80" alt="">
-          <div class="video-play">
-            <span>
-              <svg viewBox="0 0 24 24"><path d="M9 18V6l12 6-12 6Z"/></svg>
-            </span>
+          <div class="cardBody">
+            <div>
+              <h3 class="cardTitle">Reklama Produktowa</h3>
+              <p class="cardDesc">
+                Kompleksowy montaż, color grading oraz sound design dla marki. Dynamiczne cięcia dopasowane do muzyki.
+              </p>
+            </div>
+            <div class="badge">4K</div>
           </div>
-          <div class="video-time">10:12</div>
-        </div>
+        </article>
 
-        <div class="video-body">
-          <h3>Vlog Podróżniczy</h3>
-          <p>Storytelling wizualny z podróży. Stabilizacja obrazu i rytmiczne cięcia.</p>
-        </div>
-      </a>
+        <article class="card"
+          data-title="Vlog Podróżniczy"
+          data-youtube="M7lc1UVf-VE"
+          aria-label="Odtwórz: Vlog Podróżniczy"
+          role="button"
+          tabindex="0"
+        >
+          <div class="thumbWrap">
+            <img class="thumb" src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1600&q=80" alt="Vlog Podróżniczy – miniaturka" />
+            <div class="playOverlay" aria-hidden="true">
+              <div class="playBtn"><div class="playTriangle"></div></div>
+            </div>
+            <div class="duration">10:12</div>
+          </div>
 
+          <div class="cardBody">
+            <div>
+              <h3 class="cardTitle">Vlog Podróżniczy</h3>
+              <p class="cardDesc">
+                Storytelling wizualny z podróży. Zaawansowane efekty przejść, stabilizacja i praca z rytmem.
+              </p>
+            </div>
+            <div class="badge">FHD</div>
+          </div>
+        </article>
+
+      </div>
+    </section>
+  </main>
+
+  <!-- MODAL -->
+  <div class="modal" id="videoModal" aria-hidden="true">
+    <div class="modalBackdrop" data-close="true"></div>
+
+    <div class="modalPanel" role="dialog" aria-modal="true" aria-label="Odtwarzacz wideo">
+      <div class="modalTop">
+        <div id="modalTitle">Wideo</div>
+        <button class="closeBtn" id="closeModal" type="button" aria-label="Zamknij">✕</button>
+      </div>
+
+      <div class="playerWrap">
+        <iframe
+          id="ytFrame"
+          src=""
+          title="YouTube player"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowfullscreen
+        ></iframe>
+      </div>
     </div>
   </div>
-</section>
+
     <section id="strony" class="py-24 bg-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-20">
@@ -896,85 +1062,66 @@
             </div>
         </div>
     </footer>
-<script>
-(function(){
-  if (window.__mpVideoGridInit) return;
-  window.__mpVideoGridInit = true;
+ <script>
+    const modal = document.getElementById('videoModal');
+    const modalTitle = document.getElementById('modalTitle');
+    const closeBtn = document.getElementById('closeModal');
+    const ytFrame = document.getElementById('ytFrame');
 
-  function toYouTubeEmbed(urlOrId){
-    const s = String(urlOrId || "").trim();
-    if (!s) return "";
+    function openModal({ title, youtubeId }) {
+      modal.classList.add('isOpen');
+      modal.setAttribute('aria-hidden', 'false');
+      modalTitle.textContent = title || 'Wideo';
 
-    if (s.includes("youtube.com/embed/")) return s;
+      // Autoplay w embedzie (mute nie jest wymagane na kliknięcie)
+      const url = `https://www.youtube.com/embed/${encodeURIComponent(youtubeId)}?autoplay=1&rel=0`;
+      ytFrame.src = url;
 
-    let id = s;
-    try {
-      if (s.startsWith("http")){
-        const u = new URL(s);
-        if (u.hostname.includes("youtu.be")) {
-          id = u.pathname.replace("/", "");
-        } else {
-          id = u.searchParams.get("v") || "";
-          if (!id && u.pathname.includes("/shorts/")) {
-            id = u.pathname.split("/shorts/")[1]?.split("/")[0] || "";
-          }
-        }
-      }
-    } catch(e){}
-
-    if (id.includes("watch?v=")) id = id.split("watch?v=")[1].split("&")[0];
-    id = id.split("&")[0].split("?")[0];
-
-    return "https://www.youtube.com/embed/" + id + "?autoplay=1&rel=0&modestbranding=1";
-  }
-
-  const modal = document.getElementById("mp-modal");
-  const player = document.getElementById("mp-player");
-  const modalTitle = document.getElementById("mp-modalTitle");
-  const closeBtn = document.getElementById("mp-close");
-
-  if (!modal || !player || !modalTitle || !closeBtn) return;
-
-  function openModal(title, video){
-    const src = toYouTubeEmbed(video);
-    if (!src) return;
-
-    modalTitle.textContent = title || "Wideo";
-    player.innerHTML =
-      '<iframe src="' + src + '" title="' + (title || "Wideo").replace(/"/g, "&quot;") + '"' +
-      ' allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>';
-
-    modal.setAttribute("aria-hidden", "false");
-    document.documentElement.style.overflow = "hidden";
-    closeBtn.focus();
-  }
-
-  function closeModal(){
-    modal.setAttribute("aria-hidden", "true");
-    player.innerHTML = "";
-    document.documentElement.style.overflow = "";
-  }
-
-  // Delegacja kliknięć: obsłuży wszystkie .mp-cardBtn na stronie (nawet jeśli dodasz kolejne karty)
-  document.addEventListener("click", function(e){
-    const btn = e.target.closest && e.target.closest(".mp-cardBtn");
-    if (!btn) return;
-    openModal(btn.dataset.title, btn.dataset.video);
-  });
-
-  closeBtn.addEventListener("click", closeModal);
-
-  modal.addEventListener("click", function(e){
-    if (e.target === modal) closeModal();
-  });
-
-  document.addEventListener("keydown", function(e){
-    if (e.key === "Escape" && modal.getAttribute("aria-hidden") === "false"){
-      closeModal();
+      document.body.style.overflow = 'hidden';
     }
-  });
-})();
-</script>
+
+    function closeModal() {
+      modal.classList.remove('isOpen');
+      modal.setAttribute('aria-hidden', 'true');
+
+      // Stop wideo
+      ytFrame.src = '';
+
+      document.body.style.overflow = '';
+    }
+
+    // klik na kartę
+    document.querySelectorAll('.card[data-youtube]').forEach(card => {
+      const handler = () => {
+        const title = card.getAttribute('data-title') || card.querySelector('.cardTitle')?.textContent || 'Wideo';
+        const youtubeId = card.getAttribute('data-youtube');
+        if (!youtubeId) return;
+        openModal({ title, youtubeId });
+      };
+
+      card.addEventListener('click', handler);
+
+      // dostępność: Enter/Space też otwiera
+      card.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          handler();
+        }
+      });
+    });
+
+    // zamykanie
+    closeBtn.addEventListener('click', closeModal);
+
+    modal.addEventListener('click', (e) => {
+      const target = e.target;
+      if (target && target.dataset && target.dataset.close === 'true') closeModal();
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && modal.classList.contains('isOpen')) closeModal();
+    });
+  </script>
     <script>
         // Mobile Menu Toggle
         const btn = document.getElementById('mobile-menu-btn');
