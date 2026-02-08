@@ -99,6 +99,7 @@
             -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
         }
     </style>
+
 </head>
 <body class="bg-white text-slate-800 antialiased selection:bg-primary selection:text-white">
 
@@ -274,82 +275,108 @@
         </div>
     </section>
 
-    <!-- Montaż Section -->
-    <section id="montaz" class="py-24 bg-slate-50 relative overflow-hidden">
-        <!-- Background Elements -->
-        <div class="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
-            <div class="absolute top-20 right-0 w-[800px] h-[800px] bg-indigo-100/50 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/3"></div>
-            <div class="absolute bottom-0 left-0 w-[600px] h-[600px] bg-blue-100/50 rounded-full blur-[100px] translate-y-1/3 -translate-x-1/4"></div>
-        </div>
+<section class="mp-section" aria-label="Montaż i postprodukcja">
+  <div class="mp-wrap">
+    <header class="mp-top">
+      <div>
+        <div class="mp-kicker">STUDIO VIDEO</div>
+        <h2 class="mp-h">Montaż &amp; Postprodukcja</h2>
+        <p class="mp-lead">
+          Tworzę dynamiczne historie, które zatrzymują uwagę widza. Kliknij w miniaturę, aby zobaczyć przykładowe realizacje.
+        </p>
+      </div>
 
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div class="flex flex-col md:flex-row justify-between items-end mb-16">
-                <div class="max-w-xl">
-                    <span class="text-primary font-bold tracking-wider uppercase text-xs mb-3 block">Studio Wideo</span>
-                    <h2 class="text-3xl md:text-5xl font-bold text-slate-900 mb-6">Montaż & Postprodukcja</h2>
-                    <p class="text-slate-600 text-lg leading-relaxed">
-                        Tworzę dynamiczne historie, które zatrzymują uwagę widza. Kliknij w miniaturę, aby zobaczyć przykładowe realizacje.
-                    </p>
-                </div>
-                <a href="https://www.youtube.com/@xfazi-pl" class="mt-8 md:mt-0 px-6 py-3 rounded-full bg-white border border-slate-200 text-slate-700 font-medium hover:border-primary hover:text-primary transition shadow-sm hover:shadow-md flex items-center group">
-                    Zobacz kanał YouTube
-                    <svg class="w-5 h-5 ml-2 text-slate-400 group-hover:text-primary transition" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
-                </a>
+      <div class="mp-cta">
+        <a class="mp-btn" href="https://www.youtube.com/" target="_blank" rel="noopener">
+          Zobacz kanał YouTube
+          <span class="mp-arrow" aria-hidden="true">→</span>
+        </a>
+      </div>
+    </header>
+
+    <div class="mp-grid">
+      <!-- KARTA 1: tutaj wklejasz osobny link do YouTube -->
+      <article class="mp-card">
+        <button class="mp-cardBtn"
+          type="button"
+          data-title="Reklama Produktowa"
+          data-video="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+          aria-label="Odtwórz: Reklama Produktowa">
+          <div class="mp-thumb">
+            <img
+              src="https://images.unsplash.com/photo-1526481280695-3c687fd643ed?auto=format&fit=crop&w=1600&q=80"
+              alt="Miniatura filmu: Reklama Produktowa"
+              loading="lazy" />
+
+            <div class="mp-play" aria-hidden="true">
+              <div class="mp-pill">
+                <svg viewBox="0 0 24 24"><path d="M9 18V6l12 6-12 6Z"/></svg>
+              </div>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
-                <!-- Video Card 1 -->
-                <div onclick="openVideo('LXb3EKWsInQ')" class="group cursor-pointer relative rounded-[2rem] overflow-hidden bg-white border border-slate-100 shadow-xl hover:shadow-2xl hover:shadow-primary/10 transition-all duration-500 hover:-translate-y-2">
-                    <div class="relative h-72 bg-slate-100 overflow-hidden">
-                        <img src="https://picsum.photos/seed/video1/800/450" alt="Video Thumbnail" class="w-full h-full object-cover transition duration-700 group-hover:scale-105">
-                        <div class="absolute inset-0 bg-black/10 group-hover:bg-black/20 transition-colors duration-300"></div>
-                        
-                        <!-- Play Button Overlay -->
-                        <div class="absolute inset-0 flex items-center justify-center">
-                            <div class="w-20 h-20 bg-white/90 backdrop-blur-md rounded-full flex items-center justify-center group-hover:scale-110 transition duration-300 shadow-lg play-pulse">
-                                <svg class="w-8 h-8 text-primary fill-current ml-1" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-                            </div>
-                        </div>
-                        
-                        <div class="absolute bottom-4 right-4 bg-black/70 backdrop-blur-sm px-3 py-1 rounded-lg text-xs font-bold text-white">02:45</div>
-                    </div>
-                    <div class="p-8">
-                        <div class="flex justify-between items-start mb-3">
-                            <h3 class="text-2xl font-bold text-slate-900 group-hover:text-primary transition">Reklama Produktowa</h3>
-                            <span class="text-xs font-bold bg-primary/10 text-primary px-3 py-1 rounded-full border border-primary/10">4K</span>
-                        </div>
-                        <p class="text-slate-500 leading-relaxed">Kompleksowy montaż, color grading oraz sound design dla marki odzieżowej. Dynamiczne cięcia dopasowane do muzyki.</p>
-                    </div>
-                </div>
+            <div class="mp-duration">02:45</div>
+          </div>
 
-                <!-- Video Card 2 -->
-                <div onclick="openVideo('ScMzIvxBSi4')" class="group cursor-pointer relative rounded-[2rem] overflow-hidden bg-white border border-slate-100 shadow-xl hover:shadow-2xl hover:shadow-primary/10 transition-all duration-500 hover:-translate-y-2">
-                    <div class="relative h-72 bg-slate-100 overflow-hidden">
-                        <img src="https://picsum.photos/seed/video2/800/450" alt="Video Thumbnail" class="w-full h-full object-cover transition duration-700 group-hover:scale-105">
-                        <div class="absolute inset-0 bg-black/10 group-hover:bg-black/20 transition-colors duration-300"></div>
-                        
-                        <!-- Play Button Overlay -->
-                        <div class="absolute inset-0 flex items-center justify-center">
-                            <div class="w-20 h-20 bg-white/90 backdrop-blur-md rounded-full flex items-center justify-center group-hover:scale-110 transition duration-300 shadow-lg play-pulse">
-                                <svg class="w-8 h-8 text-primary fill-current ml-1" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-                            </div>
-                        </div>
-
-                        <div class="absolute bottom-4 right-4 bg-black/70 backdrop-blur-sm px-3 py-1 rounded-lg text-xs font-bold text-white">10:12</div>
-                    </div>
-                    <div class="p-8">
-                        <div class="flex justify-between items-start mb-3">
-                            <h3 class="text-2xl font-bold text-slate-900 group-hover:text-primary transition">Vlog Podróżniczy</h3>
-                            <span class="text-xs font-bold bg-primary/10 text-primary px-3 py-1 rounded-full border border-primary/10">FHD</span>
-                        </div>
-                        <p class="text-slate-500 leading-relaxed">Storytelling wizualny z podróży do Japonii. Zaawansowane efekty przejść i stabilizacja obrazu.</p>
-                    </div>
-                </div>
+          <div class="mp-body">
+            <div>
+              <h3 class="mp-title">Reklama Produktowa</h3>
+              <p class="mp-desc">
+                Kompleksowy montaż, color grading oraz sound design dla marki odzieżowej. Dynamiczne cięcia dopasowane do muzyki.
+              </p>
             </div>
-        </div>
-    </section>
+            <div class="mp-badge">4K</div>
+          </div>
+        </button>
+      </article>
 
-    <!-- Strony Section -->
+      <!-- KARTA 2: osobny link do YouTube -->
+      <article class="mp-card">
+        <button class="mp-cardBtn"
+          type="button"
+          data-title="Vlog Podróżniczy"
+          data-video="https://www.youtube.com/watch?v=mcd8c6uDkpg&t=24s"
+          aria-label="Odtwórz: Vlog Podróżniczy">
+          <div class="mp-thumb">
+            <img
+              src="https://images.unsplash.com/photo-1500375592092-40eb2168fd21?auto=format&fit=crop&w=1600&q=80"
+              alt="Miniatura filmu: Vlog Podróżniczy"
+              loading="lazy" />
+
+            <div class="mp-play" aria-hidden="true">
+              <div class="mp-pill">
+                <svg viewBox="0 0 24 24"><path d="M9 18V6l12 6-12 6Z"/></svg>
+              </div>
+            </div>
+
+            <div class="mp-duration">10:12</div>
+          </div>
+
+          <div class="mp-body">
+            <div>
+              <h3 class="mp-title">Vlog Podróżniczy</h3>
+              <p class="mp-desc">
+                Storytelling wizualny z podróży do Japonii. Zaawansowane efekty przejść i stabilizacja obrazu.
+              </p>
+            </div>
+            <div class="mp-badge">FHD</div>
+          </div>
+        </button>
+      </article>
+    </div>
+  </div>
+  <div class="mp-modal" id="mp-modal" aria-hidden="true" role="dialog" aria-modal="true">
+    <div class="mp-panel" role="document">
+      <div class="mp-modalTop">
+        <div>
+          <div class="mp-modalTitle" id="mp-modalTitle">Wideo</div>
+          <small>Kliknij poza oknem lub ESC, aby zamknąć</small>
+        </div>
+        <button class="mp-close" id="mp-close" type="button" aria-label="Zamknij">Zamknij ✕</button>
+      </div>
+      <div class="mp-player" id="mp-player"></div>
+    </div>
+  </div>
+</section>
     <section id="strony" class="py-24 bg-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-20">
@@ -680,8 +707,8 @@
                     <p class="text-slate-500 mb-8">Skopiuj adres, aby wysłać wiadomość.</p>
                     
                     <div class="w-full bg-slate-50 p-2 rounded-xl border border-slate-200 flex items-center justify-between pl-4 group-hover:border-primary/30 transition">
-                        <span class="font-mono text-slate-700 font-medium select-all truncate mr-2">xfazi.pl@gmail.com</span>
-                        <button onclick="copyText('xfazi.pl@gmail.com', this)" class="bg-white px-4 py-2 rounded-lg text-sm font-bold text-slate-700 shadow-sm border border-gray-100 hover:text-primary hover:border-primary transition active:scale-95 flex-shrink-0">
+                        <span class="font-mono text-slate-700 font-medium select-all truncate mr-2">kontakt@xfazi.pl</span>
+                        <button onclick="copyText('kontakt@xfazi.pl', this)" class="bg-white px-4 py-2 rounded-lg text-sm font-bold text-slate-700 shadow-sm border border-gray-100 hover:text-primary hover:border-primary transition active:scale-95 flex-shrink-0">
                             Kopiuj
                         </button>
                     </div>
@@ -714,14 +741,14 @@
                 <!-- Left Side: Logo, Text, YouTube -->
                 <div class="max-w-sm">
                     <a href="#" class="text-2xl font-bold tracking-tight text-slate-900 mb-4 block">
-                        Kreator<span class="text-primary">.</span>
+                        X_FAZI<span class="text-primary">.</span>
                     </a>
                     <p class="text-slate-500 mb-6">
                         Tworzę cyfrowe rozwiązania dla nowoczesnych marek. Skontaktuj się ze mną, aby omówić Twój kolejny projekt.
                     </p>
                     <!-- Socials: YouTube Only -->
                     <div class="flex space-x-4">
-                        <a href="#" class="w-10 h-10 rounded-full bg-secondary flex items-center justify-center text-slate-600 hover:bg-primary hover:text-white transition group">
+                        <a href="https://www.youtube.com/@xfazi-pl" class="w-10 h-10 rounded-full bg-secondary flex items-center justify-center text-slate-600 hover:bg-primary hover:text-white transition group">
                             <span class="sr-only">YouTube</span>
                             <svg class="h-5 w-5 fill-current" viewBox="0 0 24 24"><path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z"/></svg>
                         </a>
@@ -743,16 +770,91 @@
             
             <!-- Bottom Copyright -->
             <div class="border-t border-gray-100 pt-8 flex flex-col md:flex-row justify-between items-center text-sm text-slate-400">
-                <p>&copy; 2023 Kreator. Wszelkie prawa zastrzeżone.</p>
+                <p>&copy; 2026 X_FAZI . Wszelkie prawa zastrzeżone.</p>
                 <div class="flex space-x-6 mt-4 md:mt-0">
-                    <a href="#" class="hover:text-slate-600">Polityka Prywatności</a>
-                    <a href="#" class="hover:text-slate-600">Regulamin</a>
                 </div>
             </div>
         </div>
     </footer>
+<script>
+(function(){
+  if (window.__mpVideoGridInit) return;
+  window.__mpVideoGridInit = true;
 
-    <!-- Scripts -->
+  function toYouTubeEmbed(urlOrId){
+    const s = String(urlOrId || "").trim();
+    if (!s) return "";
+
+    if (s.includes("youtube.com/embed/")) return s;
+
+    let id = s;
+    try {
+      if (s.startsWith("http")){
+        const u = new URL(s);
+        if (u.hostname.includes("youtu.be")) {
+          id = u.pathname.replace("/", "");
+        } else {
+          id = u.searchParams.get("v") || "";
+          if (!id && u.pathname.includes("/shorts/")) {
+            id = u.pathname.split("/shorts/")[1]?.split("/")[0] || "";
+          }
+        }
+      }
+    } catch(e){}
+
+    if (id.includes("watch?v=")) id = id.split("watch?v=")[1].split("&")[0];
+    id = id.split("&")[0].split("?")[0];
+
+    return "https://www.youtube.com/embed/" + id + "?autoplay=1&rel=0&modestbranding=1";
+  }
+
+  const modal = document.getElementById("mp-modal");
+  const player = document.getElementById("mp-player");
+  const modalTitle = document.getElementById("mp-modalTitle");
+  const closeBtn = document.getElementById("mp-close");
+
+  if (!modal || !player || !modalTitle || !closeBtn) return;
+
+  function openModal(title, video){
+    const src = toYouTubeEmbed(video);
+    if (!src) return;
+
+    modalTitle.textContent = title || "Wideo";
+    player.innerHTML =
+      '<iframe src="' + src + '" title="' + (title || "Wideo").replace(/"/g, "&quot;") + '"' +
+      ' allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>';
+
+    modal.setAttribute("aria-hidden", "false");
+    document.documentElement.style.overflow = "hidden";
+    closeBtn.focus();
+  }
+
+  function closeModal(){
+    modal.setAttribute("aria-hidden", "true");
+    player.innerHTML = "";
+    document.documentElement.style.overflow = "";
+  }
+
+  // Delegacja kliknięć: obsłuży wszystkie .mp-cardBtn na stronie (nawet jeśli dodasz kolejne karty)
+  document.addEventListener("click", function(e){
+    const btn = e.target.closest && e.target.closest(".mp-cardBtn");
+    if (!btn) return;
+    openModal(btn.dataset.title, btn.dataset.video);
+  });
+
+  closeBtn.addEventListener("click", closeModal);
+
+  modal.addEventListener("click", function(e){
+    if (e.target === modal) closeModal();
+  });
+
+  document.addEventListener("keydown", function(e){
+    if (e.key === "Escape" && modal.getAttribute("aria-hidden") === "false"){
+      closeModal();
+    }
+  });
+})();
+</script>
     <script>
         // Mobile Menu Toggle
         const btn = document.getElementById('mobile-menu-btn');
