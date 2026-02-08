@@ -99,6 +99,7 @@
             -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
         }
     </style>
+
 </head>
 <body class="bg-white text-slate-800 antialiased selection:bg-primary selection:text-white">
 
@@ -273,28 +274,109 @@
             </div>
         </div>
     </section>
-    <!-- Montaż Section (MODIFIED) -->
-    <section id="montaz" class="py-24 bg-slate-50 relative overflow-hidden">
-        <!-- Background Elements -->
-        <div class="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
-            <div class="absolute top-20 right-0 w-[800px] h-[800px] bg-indigo-100/50 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/3"></div>
-            <div class="absolute bottom-0 left-0 w-[600px] h-[600px] bg-blue-100/50 rounded-full blur-[100px] translate-y-1/3 -translate-x-1/4"></div>
-        </div>
 
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div class="flex flex-col md:flex-row justify-between items-end mb-16">
-                <div class="max-w-xl">
-                    <span class="text-primary font-bold tracking-wider uppercase text-xs mb-3 block">Studio Wideo</span>
-                    <h2 class="text-3xl md:text-5xl font-bold text-slate-900 mb-6">Montaż & Postprodukcja</h2>
-                    <p class="text-slate-600 text-lg leading-relaxed">
-                        Tworzę dynamiczne historie, które zatrzymują uwagę widza. Poniżej znajdziesz wybrane realizacje z możliwością szybkiego podglądu i skopiowania linku.
-                    </p>
-                </div>
-                <a href="#" class="mt-8 md:mt-0 px-6 py-3 rounded-full bg-white border border-slate-200 text-slate-700 font-medium hover:border-primary hover:text-primary transition shadow-sm hover:shadow-md flex items-center group">
-                    Zobacz kanał YouTube
-                    <svg class="w-5 h-5 ml-2 text-slate-400 group-hover:text-primary transition" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
-                </a>
+<section class="mp-section" aria-label="Montaż i postprodukcja">
+  <div class="mp-wrap">
+    <header class="mp-top">
+      <div>
+        <div class="mp-kicker">STUDIO VIDEO</div>
+        <h2 class="mp-h">Montaż &amp; Postprodukcja</h2>
+        <p class="mp-lead">
+          Tworzę dynamiczne historie, które zatrzymują uwagę widza. Kliknij w miniaturę, aby zobaczyć przykładowe realizacje.
+        </p>
+      </div>
+
+      <div class="mp-cta">
+        <a class="mp-btn" href="https://www.youtube.com/" target="_blank" rel="noopener">
+          Zobacz kanał YouTube
+          <span class="mp-arrow" aria-hidden="true">→</span>
+        </a>
+      </div>
+    </header>
+
+    <div class="mp-grid">
+      <!-- KARTA 1: tutaj wklejasz osobny link do YouTube -->
+      <article class="mp-card">
+        <button class="mp-cardBtn"
+          type="button"
+          data-title="Reklama Produktowa"
+          data-video="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+          aria-label="Odtwórz: Reklama Produktowa">
+          <div class="mp-thumb">
+            <img
+              src="https://images.unsplash.com/photo-1526481280695-3c687fd643ed?auto=format&fit=crop&w=1600&q=80"
+              alt="Miniatura filmu: Reklama Produktowa"
+              loading="lazy" />
+
+            <div class="mp-play" aria-hidden="true">
+              <div class="mp-pill">
+                <svg viewBox="0 0 24 24"><path d="M9 18V6l12 6-12 6Z"/></svg>
+              </div>
             </div>
+
+            <div class="mp-duration">02:45</div>
+          </div>
+
+          <div class="mp-body">
+            <div>
+              <h3 class="mp-title">Reklama Produktowa</h3>
+              <p class="mp-desc">
+                Kompleksowy montaż, color grading oraz sound design dla marki odzieżowej. Dynamiczne cięcia dopasowane do muzyki.
+              </p>
+            </div>
+            <div class="mp-badge">4K</div>
+          </div>
+        </button>
+      </article>
+
+      <!-- KARTA 2: osobny link do YouTube -->
+      <article class="mp-card">
+        <button class="mp-cardBtn"
+          type="button"
+          data-title="Vlog Podróżniczy"
+          data-video="https://www.youtube.com/watch?v=mcd8c6uDkpg&t=24s"
+          aria-label="Odtwórz: Vlog Podróżniczy">
+          <div class="mp-thumb">
+            <img
+              src="https://images.unsplash.com/photo-1500375592092-40eb2168fd21?auto=format&fit=crop&w=1600&q=80"
+              alt="Miniatura filmu: Vlog Podróżniczy"
+              loading="lazy" />
+
+            <div class="mp-play" aria-hidden="true">
+              <div class="mp-pill">
+                <svg viewBox="0 0 24 24"><path d="M9 18V6l12 6-12 6Z"/></svg>
+              </div>
+            </div>
+
+            <div class="mp-duration">10:12</div>
+          </div>
+
+          <div class="mp-body">
+            <div>
+              <h3 class="mp-title">Vlog Podróżniczy</h3>
+              <p class="mp-desc">
+                Storytelling wizualny z podróży do Japonii. Zaawansowane efekty przejść i stabilizacja obrazu.
+              </p>
+            </div>
+            <div class="mp-badge">FHD</div>
+          </div>
+        </button>
+      </article>
+    </div>
+  </div>
+  <div class="mp-modal" id="mp-modal" aria-hidden="true" role="dialog" aria-modal="true">
+    <div class="mp-panel" role="document">
+      <div class="mp-modalTop">
+        <div>
+          <div class="mp-modalTitle" id="mp-modalTitle">Wideo</div>
+          <small>Kliknij poza oknem lub ESC, aby zamknąć</small>
+        </div>
+        <button class="mp-close" id="mp-close" type="button" aria-label="Zamknij">Zamknij ✕</button>
+      </div>
+      <div class="mp-player" id="mp-player"></div>
+    </div>
+  </div>
+</section>
     <section id="strony" class="py-24 bg-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-20">
@@ -694,7 +776,163 @@
             </div>
         </div>
     </footer>
-<script> 
+<script>
+(function(){
+  if (window.__mpVideoGridInit) return;
+  window.__mpVideoGridInit = true;
+
+  function toYouTubeEmbed(urlOrId){
+    const s = String(urlOrId || "").trim();
+    if (!s) return "";
+
+    if (s.includes("youtube.com/embed/")) return s;
+
+    let id = s;
+    try {
+      if (s.startsWith("http")){
+        const u = new URL(s);
+        if (u.hostname.includes("youtu.be")) {
+          id = u.pathname.replace("/", "");
+        } else {
+          id = u.searchParams.get("v") || "";
+          if (!id && u.pathname.includes("/shorts/")) {
+            id = u.pathname.split("/shorts/")[1]?.split("/")[0] || "";
+          }
+        }
+      }
+    } catch(e){}
+
+    if (id.includes("watch?v=")) id = id.split("watch?v=")[1].split("&")[0];
+    id = id.split("&")[0].split("?")[0];
+
+    return "https://www.youtube.com/embed/" + id + "?autoplay=1&rel=0&modestbranding=1";
+  }
+
+  const modal = document.getElementById("mp-modal");
+  const player = document.getElementById("mp-player");
+  const modalTitle = document.getElementById("mp-modalTitle");
+  const closeBtn = document.getElementById("mp-close");
+
+  if (!modal || !player || !modalTitle || !closeBtn) return;
+
+  function openModal(title, video){
+    const src = toYouTubeEmbed(video);
+    if (!src) return;
+
+    modalTitle.textContent = title || "Wideo";
+    player.innerHTML =
+      '<iframe src="' + src + '" title="' + (title || "Wideo").replace(/"/g, "&quot;") + '"' +
+      ' allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>';
+
+    modal.setAttribute("aria-hidden", "false");
+    document.documentElement.style.overflow = "hidden";
+    closeBtn.focus();
+  }
+
+  function closeModal(){
+    modal.setAttribute("aria-hidden", "true");
+    player.innerHTML = "";
+    document.documentElement.style.overflow = "";
+  }
+
+  // Delegacja kliknięć: obsłuży wszystkie .mp-cardBtn na stronie (nawet jeśli dodasz kolejne karty)
+  document.addEventListener("click", function(e){
+    const btn = e.target.closest && e.target.closest(".mp-cardBtn");
+    if (!btn) return;
+    openModal(btn.dataset.title, btn.dataset.video);
+  });
+
+  closeBtn.addEventListener("click", closeModal);
+
+  modal.addEventListener("click", function(e){
+    if (e.target === modal) closeModal();
+  });
+
+  document.addEventListener("keydown", function(e){
+    if (e.key === "Escape" && modal.getAttribute("aria-hidden") === "false"){
+      closeModal();
+    }
+  });
+})();
+</script>
+    <script>
+        // Mobile Menu Toggle
+        const btn = document.getElementById('mobile-menu-btn');
+        const menu = document.getElementById('mobile-menu');
+
+        btn.addEventListener('click', () => {
+            menu.classList.toggle('hidden');
+        });
+
+        // Close mobile menu on link click
+        document.querySelectorAll('#mobile-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                menu.classList.add('hidden');
+            });
+        });
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('navbar');
+            if (window.scrollY > 10) {
+                nav.classList.add('shadow-sm');
+            } else {
+                nav.classList.remove('shadow-sm');
+            }
+        });
+
+        // --- VIDEO MODAL LOGIC ---
+        const videoModal = document.getElementById('video-modal');
+        const videoFrame = document.getElementById('video-frame');
+        const videoModalContent = document.getElementById('video-modal-content');
+
+        function openVideo(videoId) {
+            // Set the YouTube source with autoplay
+            videoFrame.src = `https://www.youtube.com/watch?v=mcd8c6uDkpg&t=24s${videoId}?autoplay=1&rel=0`;
+            
+            // Show modal container
+            videoModal.classList.remove('hidden');
+            
+            // Force reflow to ensure transition triggers
+            void videoModal.offsetWidth; 
+            
+            // Fade in background
+            videoModal.classList.remove('opacity-0');
+            
+            // Scale up content
+            videoModalContent.classList.remove('scale-95');
+            videoModalContent.classList.add('scale-100');
+            
+            // Prevent body scrolling
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeVideo() {
+            // Fade out background
+            videoModal.classList.add('opacity-0');
+            
+            // Scale down content
+            videoModalContent.classList.remove('scale-100');
+            videoModalContent.classList.add('scale-95');
+            
+            // Wait for transition to finish before hiding
+            setTimeout(() => {
+                videoModal.classList.add('hidden');
+                // Stop video by clearing src
+                videoFrame.src = '';
+            }, 300); 
+
+            // Restore body scrolling
+            document.body.style.overflow = 'auto';
+        }
+
+        // Close on Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && !videoModal.classList.contains('hidden')) {
+                closeVideo();
+            }
+        });
+
         // --- UNIVERSAL COPY LOGIC (Email & Discord) ---
         function copyText(text, button) {
             // Try standard clipboard API
