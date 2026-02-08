@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+<html lang="pl" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>xfazi.pl</title>
+    <meta name="description" content="Profesjonalne: Grafiki, Montaż Wideo, Strony WWW.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: '#6366f1', // Indigo/Violet
+                        primaryDark: '#4f46e5',
+                        secondary: '#f3f4f6', // Jasny Szary
+                        dark: '#1e293b',
+                        discord: '#5865F2', // Discord Brand Color
+                    },
+                    borderRadius: {
+                        '3xl': '1.5rem',
+                        '4xl': '2rem',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+        
+        .glass-nav {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(229, 231, 235, 0.5);
+        }
+
+        .fade-in-up {
+            animation: fadeInUp 0.8s ease-out forwards;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .delay-100 { animation-delay: 0.1s; }
+        .delay-200 { animation-delay: 0.2s; }
+        .delay-300 { animation-delay: 0.3s; }
+
+        /* Play Button Pulse */
+        .play-pulse {
+            animation: pulse-border 2s infinite;
+        }
+        @keyframes pulse-border {
+            0% { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.7); }
+            70% { box-shadow: 0 0 0 15px rgba(255, 255, 255, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0); }
+        }
+
+        /* Marquee Animation for Reviews */
+        .animate-marquee {
+            animation: marquee 60s linear infinite;
+        }
+        
+        .hover\:pause:hover {
+            animation-play-state: paused;
+        }
+
+        @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        /* Gradient Mask for Marquee edges */
+        .mask-gradient {
+            mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+            -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+        }
+    </style>
+</head>
+<body class="bg-white text-slate-800 antialiased selection:bg-primary selection:text-white">
+
+    <!-- Video Modal (YouTube Player Panel) -->
+    <div id="video-modal" class="fixed inset-0 z-[100] bg-black/90 hidden flex items-center justify-center p-4 backdrop-blur-md transition-all duration-300 opacity-0">
+        <!-- Modal Content Container with Scale Animation -->
+        <div id="video-modal-content" class="relative w-full max-w-5xl aspect-video bg-black rounded-2xl overflow-hidden shadow-2xl ring-1 ring-white/10 transform scale-95 transition-all duration-300">
+            <!-- Close Button -->
+            <button onclick="closeVideo()" class="absolute top-4 right-4 z-20 bg-black/50 hover:bg-primary text-white p-2 rounded-full backdrop-blur-sm transition-colors group">
+                <svg class="w-6 h-6 group-hover:rotate-90 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+            </button>
+            <!-- YouTube Iframe -->
+            <iframe id="video-frame" class="w-full h-full" src="" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <!-- Click outside to close area -->
+        <div class="absolute inset-0 -z-10" onclick="closeVideo()"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 glass-nav transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <!-- Logo -->
+                <div class="flex-shrink-0 flex items-center">
+                    <a href="#" class="text-2xl font-bold tracking-tight text-slate-900">
+                        Kreator<span class="text-primary">.</span>
+                    </a>
+                </div>
+
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex space-x-8 items-center">
+                    <a href="#o-mnie" class="text-sm font-medium text-slate-600 hover:text-primary transition-colors">O mnie</a>
+                    <a href="#grafiki" class="text-sm font-medium text-slate-600 hover:text-primary transition-colors">Grafiki</a>
+                    <a href="#montaz" class="text-sm font-medium text-slate-600 hover:text-primary transition-colors">Montaż</a>
+                    <a href="#strony" class="text-sm font-medium text-slate-600 hover:text-primary transition-colors">Strony</a>
+                    <a href="#opinie" class="text-sm font-medium text-slate-600 hover:text-primary transition-colors">Opinie</a>
+                    <a href="#kontakt" class="bg-slate-900 text-white px-6 py-2.5 rounded-full text-sm font-medium hover:bg-primary transition-all shadow-lg hover:shadow-primary/30">
+                        Współpraca
+                    </a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-btn" class="text-slate-600 hover:text-slate-900 focus:outline-none p-2 rounded-xl hover:bg-secondary transition">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu Panel -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-gray-100 absolute w-full">
+            <div class="px-4 pt-2 pb-6 space-y-2 shadow-xl rounded-b-3xl">
+                <a href="#o-mnie" class="block px-4 py-3 rounded-xl text-base font-medium text-slate-700 hover:bg-secondary hover:text-primary">O mnie</a>
+                <a href="#grafiki" class="block px-4 py-3 rounded-xl text-base font-medium text-slate-700 hover:bg-secondary hover:text-primary">Grafiki</a>
+                <a href="#montaz" class="block px-4 py-3 rounded-xl text-base font-medium text-slate-700 hover:bg-secondary hover:text-primary">Montaż</a>
+                <a href="#strony" class="block px-4 py-3 rounded-xl text-base font-medium text-slate-700 hover:bg-secondary hover:text-primary">Strony</a>
+                <a href="#opinie" class="block px-4 py-3 rounded-xl text-base font-medium text-slate-700 hover:bg-secondary hover:text-primary">Opinie</a>
+                <a href="#kontakt" class="block px-4 py-3 mt-4 text-center rounded-xl text-base font-medium bg-primary text-white hover:bg-primaryDark">Współpraca</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden">
+        <div class="absolute top-0 right-0 -z-10 opacity-30 translate-x-1/3 -translate-y-1/4">
+            <div class="w-[600px] h-[600px] bg-primary rounded-full blur-[120px]"></div>
+        </div>
+        <div class="absolute bottom-0 left-0 -z-10 opacity-20 -translate-x-1/3 translate-y-1/4">
+            <div class="w-[500px] h-[500px] bg-blue-400 rounded-full blur-[100px]"></div>
+        </div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <span class="inline-block py-1 px-3 rounded-full bg-secondary text-primary text-xs font-semibold tracking-wide uppercase mb-6 fade-in-up">
+                Multidyscyplinarny Twórca
+            </span>
+            <h1 class="text-5xl md:text-7xl font-bold text-slate-900 tracking-tight mb-8 fade-in-up delay-100">
+                Design. Montaż. <br class="hidden md:block" />
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-blue-500">Web Development.</span>
+            </h1>
+            <p class="mt-4 max-w-2xl mx-auto text-xl text-slate-600 mb-10 fade-in-up delay-200">
+                Łączę estetykę z technologią. Tworzę spójne identyfikacje wizualne, dynamiczne montaże wideo oraz nowoczesne strony internetowe.
+            </p>
+            <div class="flex flex-col sm:flex-row justify-center gap-4 fade-in-up delay-300">
+                <a href="#grafiki" class="px-8 py-4 rounded-full bg-primary text-white font-semibold hover:bg-primaryDark transition shadow-lg hover:shadow-primary/40">
+                    Zobacz Portfolio
+                </a>
+                <a href="#kontakt" class="px-8 py-4 rounded-full bg-white text-slate-700 border border-gray-200 font-semibold hover:bg-gray-50 hover:border-gray-300 transition">
+                    Skontaktuj się
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- O Mnie Section -->
+    <section id="o-mnie" class="py-20 bg-secondary/50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div class="relative">
+                    <div class="absolute inset-0 bg-primary rounded-3xl rotate-3 opacity-10"></div>
+                    <img src="https://picsum.photos/seed/designer/600/700" alt="Portret" class="relative rounded-3xl shadow-2xl w-full object-cover h-[500px] grayscale hover:grayscale-0 transition duration-500">
+                </div>
+                <div>
+                    <h2 class="text-3xl md:text-4xl font-bold text-slate-900 mb-6">O mnie</h2>
+                    <p class="text-lg text-slate-600 mb-6 leading-relaxed">
+                        Cześć! Jestem pasjonatem cyfrowej kreacji. Moja praca to nie tylko zawód, ale sposób na wyrażanie siebie i pomaganie markom w budowaniu silnej obecności w sieci.
+                    </p>
+                    <p class="text-lg text-slate-600 mb-8 leading-relaxed">
+                        Specjalizuję się w trzech kluczowych obszarach: projektowaniu graficznym (UI/UX, branding), montażu wideo (YouTube, reklamy, social media) oraz programowaniu stron internetowych (HTML, CSS, JS, nowoczesne frameworki).
+                    </p>
+                    
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                        <div class="bg-white p-4 rounded-2xl shadow-sm border border-gray-100 text-center">
+                            <div class="text-primary font-bold text-xl mb-1">5+</div>
+                            <div class="text-slate-500 text-sm">Lat doświadczenia</div>
+                        </div>
+                        <div class="bg-white p-4 rounded-2xl shadow-sm border border-gray-100 text-center">
+                            <div class="text-primary font-bold text-xl mb-1">100+</div>
+                            <div class="text-slate-500 text-sm">Zrealizowanych projektów</div>
+                        </div>
+                        <div class="bg-white p-4 rounded-2xl shadow-sm border border-gray-100 text-center">
+                            <div class="text-primary font-bold text-xl mb-1">100%</div>
+                            <div class="text-slate-500 text-sm">Zadowolonych klientów</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Grafiki Section -->
+    <section id="grafiki" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-slate-900 mb-4">Projekty Graficzne</h2>
+                <p class="text-slate-600 max-w-2xl mx-auto">Minimalistyczne logo, spójne identyfikacje wizualne i materiały reklamowe, które przyciągają wzrok.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Item 1 -->
+                <div class="group relative overflow-hidden rounded-3xl cursor-pointer shadow-lg">
+                    <img src="https://picsum.photos/seed/graphic1/600/600" alt="Projekt 1" class="w-full h-80 object-cover transition duration-700 group-hover:scale-110">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition duration-300 flex items-end p-8">
+                        <div class="transform translate-y-4 group-hover:translate-y-0 transition duration-300">
+                            <h3 class="text-white text-xl font-bold">Rebranding Marki</h3>
+                            <p class="text-gray-300 text-sm mt-1">Identyfikacja wizualna</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Item 2 -->
+                <div class="group relative overflow-hidden rounded-3xl cursor-pointer shadow-lg">
+                    <img src="https://picsum.photos/seed/graphic2/600/600" alt="Projekt 2" class="w-full h-80 object-cover transition duration-700 group-hover:scale-110">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition duration-300 flex items-end p-8">
+                        <div class="transform translate-y-4 group-hover:translate-y-0 transition duration-300">
+                            <h3 class="text-white text-xl font-bold">Social Media Pack</h3>
+                            <p class="text-gray-300 text-sm mt-1">Instagram & Facebook</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Item 3 -->
+                <div class="group relative overflow-hidden rounded-3xl cursor-pointer shadow-lg">
+                    <img src="https://picsum.photos/seed/graphic3/600/600" alt="Projekt 3" class="w-full h-80 object-cover transition duration-700 group-hover:scale-110">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition duration-300 flex items-end p-8">
+                        <div class="transform translate-y-4 group-hover:translate-y-0 transition duration-300">
+                            <h3 class="text-white text-xl font-bold">Projekt UI Aplikacji</h3>
+                            <p class="text-gray-300 text-sm mt-1">User Interface</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Montaż Section -->
+    <section id="montaz" class="py-24 bg-slate-50 relative overflow-hidden">
+        <!-- Background Elements -->
+        <div class="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
+            <div class="absolute top-20 right-0 w-[800px] h-[800px] bg-indigo-100/50 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/3"></div>
+            <div class="absolute bottom-0 left-0 w-[600px] h-[600px] bg-blue-100/50 rounded-full blur-[100px] translate-y-1/3 -translate-x-1/4"></div>
+        </div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-16">
+                <div class="max-w-xl">
+                    <span class="text-primary font-bold tracking-wider uppercase text-xs mb-3 block">Studio Wideo</span>
+                    <h2 class="text-3xl md:text-5xl font-bold text-slate-900 mb-6">Montaż & Postprodukcja</h2>
+                    <p class="text-slate-600 text-lg leading-relaxed">
+                        Tworzę dynamiczne historie, które zatrzymują uwagę widza. Kliknij w miniaturę, aby zobaczyć przykładowe realizacje.
+                    </p>
+                </div>
+                <a href="https://www.youtube.com/@xfazi-pl" class="mt-8 md:mt-0 px-6 py-3 rounded-full bg-white border border-slate-200 text-slate-700 font-medium hover:border-primary hover:text-primary transition shadow-sm hover:shadow-md flex items-center group">
+                    Zobacz kanał YouTube
+                    <svg class="w-5 h-5 ml-2 text-slate-400 group-hover:text-primary transition" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+                </a>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+                <!-- Video Card 1 -->
+                <div onclick="openVideo('LXb3EKWsInQ')" class="group cursor-pointer relative rounded-[2rem] overflow-hidden bg-white border border-slate-100 shadow-xl hover:shadow-2xl hover:shadow-primary/10 transition-all duration-500 hover:-translate-y-2">
+                    <div class="relative h-72 bg-slate-100 overflow-hidden">
+                        <img src="https://picsum.photos/seed/video1/800/450" alt="Video Thumbnail" class="w-full h-full object-cover transition duration-700 group-hover:scale-105">
+                        <div class="absolute inset-0 bg-black/10 group-hover:bg-black/20 transition-colors duration-300"></div>
+                        
+                        <!-- Play Button Overlay -->
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <div class="w-20 h-20 bg-white/90 backdrop-blur-md rounded-full flex items-center justify-center group-hover:scale-110 transition duration-300 shadow-lg play-pulse">
+                                <svg class="w-8 h-8 text-primary fill-current ml-1" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                            </div>
+                        </div>
+                        
+                        <div class="absolute bottom-4 right-4 bg-black/70 backdrop-blur-sm px-3 py-1 rounded-lg text-xs font-bold text-white">02:45</div>
+                    </div>
+                    <div class="p-8">
+                        <div class="flex justify-between items-start mb-3">
+                            <h3 class="text-2xl font-bold text-slate-900 group-hover:text-primary transition">Reklama Produktowa</h3>
+                            <span class="text-xs font-bold bg-primary/10 text-primary px-3 py-1 rounded-full border border-primary/10">4K</span>
+                        </div>
+                        <p class="text-slate-500 leading-relaxed">Kompleksowy montaż, color grading oraz sound design dla marki odzieżowej. Dynamiczne cięcia dopasowane do muzyki.</p>
+                    </div>
+                </div>
+
+                <!-- Video Card 2 -->
+                <div onclick="openVideo('ScMzIvxBSi4')" class="group cursor-pointer relative rounded-[2rem] overflow-hidden bg-white border border-slate-100 shadow-xl hover:shadow-2xl hover:shadow-primary/10 transition-all duration-500 hover:-translate-y-2">
+                    <div class="relative h-72 bg-slate-100 overflow-hidden">
+                        <img src="https://picsum.photos/seed/video2/800/450" alt="Video Thumbnail" class="w-full h-full object-cover transition duration-700 group-hover:scale-105">
+                        <div class="absolute inset-0 bg-black/10 group-hover:bg-black/20 transition-colors duration-300"></div>
+                        
+                        <!-- Play Button Overlay -->
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <div class="w-20 h-20 bg-white/90 backdrop-blur-md rounded-full flex items-center justify-center group-hover:scale-110 transition duration-300 shadow-lg play-pulse">
+                                <svg class="w-8 h-8 text-primary fill-current ml-1" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                            </div>
+                        </div>
+
+                        <div class="absolute bottom-4 right-4 bg-black/70 backdrop-blur-sm px-3 py-1 rounded-lg text-xs font-bold text-white">10:12</div>
+                    </div>
+                    <div class="p-8">
+                        <div class="flex justify-between items-start mb-3">
+                            <h3 class="text-2xl font-bold text-slate-900 group-hover:text-primary transition">Vlog Podróżniczy</h3>
+                            <span class="text-xs font-bold bg-primary/10 text-primary px-3 py-1 rounded-full border border-primary/10">FHD</span>
+                        </div>
+                        <p class="text-slate-500 leading-relaxed">Storytelling wizualny z podróży do Japonii. Zaawansowane efekty przejść i stabilizacja obrazu.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Strony Section -->
+    <section id="strony" class="py-24 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-20">
+                <h2 class="text-3xl md:text-5xl font-bold text-slate-900 mb-6">Strony Internetowe</h2>
+                <p class="text-slate-600 text-lg max-w-2xl mx-auto">
+                    Nowoczesny design zamknięty w kodzie. Każdy projekt to połączenie estetyki z wydajnością.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+                <!-- Web Project 1 -->
+                <div class="group bg-white rounded-[2rem] p-3 shadow-sm hover:shadow-2xl transition-all duration-500 border border-gray-100 hover:-translate-y-2">
+                    <!-- Browser Frame -->
+                    <div class="bg-slate-100 rounded-t-3xl border-b border-gray-200 p-3 flex items-center gap-2">
+                        <div class="w-3 h-3 rounded-full bg-red-400"></div>
+                        <div class="w-3 h-3 rounded-full bg-yellow-400"></div>
+                        <div class="w-3 h-3 rounded-full bg-green-400"></div>
+                        <div class="ml-2 text-[10px] text-gray-400 font-mono bg-white px-2 py-0.5 rounded-md w-full truncate">sklep-odziezowy.pl</div>
+                    </div>
+                    <!-- Image Container -->
+                    <div class="h-56 overflow-hidden relative bg-gray-50">
+                        <img src="https://picsum.photos/seed/web1/600/800" alt="Website" class="w-full h-auto object-cover object-top transition-transform duration-[2s] ease-in-out group-hover:translate-y-[-20%]">
+                        <div class="absolute inset-0 bg-primary/0 group-hover:bg-primary/10 transition-colors duration-300"></div>
+                    </div>
+                    <!-- Content -->
+                    <div class="p-6">
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="px-3 py-1 bg-blue-50 text-blue-600 text-xs font-bold rounded-full border border-blue-100">E-commerce</span>
+                            <span class="px-3 py-1 bg-slate-50 text-slate-600 text-xs font-bold rounded-full border border-slate-100">Shopify</span>
+                        </div>
+                        <h3 class="text-2xl font-bold text-slate-900 mb-2 group-hover:text-primary transition">Sklep Premium</h3>
+                        <p class="text-slate-500 text-sm mb-6 leading-relaxed">Kompletne wdrożenie sklepu online z niestandardowym szablonem i integracją płatności.</p>
+                        <a href="#" class="inline-flex items-center text-sm font-bold text-slate-900 hover:text-primary transition">
+                            Zobacz online <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Web Project 2 -->
+                <div class="group bg-white rounded-[2rem] p-3 shadow-sm hover:shadow-2xl transition-all duration-500 border border-gray-100 hover:-translate-y-2">
+                    <!-- Browser Frame -->
+                    <div class="bg-slate-100 rounded-t-3xl border-b border-gray-200 p-3 flex items-center gap-2">
+                        <div class="w-3 h-3 rounded-full bg-red-400"></div>
+                        <div class="w-3 h-3 rounded-full bg-yellow-400"></div>
+                        <div class="w-3 h-3 rounded-full bg-green-400"></div>
+                        <div class="ml-2 text-[10px] text-gray-400 font-mono bg-white px-2 py-0.5 rounded-md w-full truncate">startup-tech.com</div>
+                    </div>
+                    <!-- Image Container -->
+                    <div class="h-56 overflow-hidden relative bg-gray-50">
+                        <img src="https://picsum.photos/seed/web2/600/800" alt="Website" class="w-full h-auto object-cover object-top transition-transform duration-[2s] ease-in-out group-hover:translate-y-[-20%]">
+                        <div class="absolute inset-0 bg-primary/0 group-hover:bg-primary/10 transition-colors duration-300"></div>
+                    </div>
+                    <!-- Content -->
+                    <div class="p-6">
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="px-3 py-1 bg-purple-50 text-purple-600 text-xs font-bold rounded-full border border-purple-100">Landing Page</span>
+                            <span class="px-3 py-1 bg-slate-50 text-slate-600 text-xs font-bold rounded-full border border-slate-100">Tailwind</span>
+                        </div>
+                        <h3 class="text-2xl font-bold text-slate-900 mb-2 group-hover:text-primary transition">Strona Produktowa</h3>
+                        <p class="text-slate-500 text-sm mb-6 leading-relaxed">High-converting landing page dla startupu technologicznego z animacjami.</p>
+                        <a href="#" class="inline-flex items-center text-sm font-bold text-slate-900 hover:text-primary transition">
+                            Zobacz online <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Web Project 3 -->
+                <div class="group bg-white rounded-[2rem] p-3 shadow-sm hover:shadow-2xl transition-all duration-500 border border-gray-100 hover:-translate-y-2">
+                    <!-- Browser Frame -->
+                    <div class="bg-slate-100 rounded-t-3xl border-b border-gray-200 p-3 flex items-center gap-2">
+                        <div class="w-3 h-3 rounded-full bg-red-400"></div>
+                        <div class="w-3 h-3 rounded-full bg-yellow-400"></div>
+                        <div class="w-3 h-3 rounded-full bg-green-400"></div>
+                        <div class="ml-2 text-[10px] text-gray-400 font-mono bg-white px-2 py-0.5 rounded-md w-full truncate">architektura.pl</div>
+                    </div>
+                    <!-- Image Container -->
+                    <div class="h-56 overflow-hidden relative bg-gray-50">
+                        <img src="https://picsum.photos/seed/web3/600/800" alt="Website" class="w-full h-auto object-cover object-top transition-transform duration-[2s] ease-in-out group-hover:translate-y-[-20%]">
+                        <div class="absolute inset-0 bg-primary/0 group-hover:bg-primary/10 transition-colors duration-300"></div>
+                    </div>
+                    <!-- Content -->
+                    <div class="p-6">
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="px-3 py-1 bg-green-50 text-green-600 text-xs font-bold rounded-full border border-green-100">Portfolio</span>
+                            <span class="px-3 py-1 bg-slate-50 text-slate-600 text-xs font-bold rounded-full border border-slate-100">React</span>
+                        </div>
+                        <h3 class="text-2xl font-bold text-slate-900 mb-2 group-hover:text-primary transition">Strona Architekta</h3>
+                        <p class="text-slate-500 text-sm mb-6 leading-relaxed">Minimalistyczne portfolio z galerią typu masonry i szybkim ładowaniem.</p>
+                        <a href="#" class="inline-flex items-center text-sm font-bold text-slate-900 hover:text-primary transition">
+                            Zobacz online <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- OPINIE (Testimonials) -->
+    <section id="opinie" class="py-24 bg-slate-50 relative overflow-hidden">
+        <!-- Decorative Background Blobs -->
+        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full overflow-hidden pointer-events-none">
+            <div class="absolute top-[20%] left-[10%] w-96 h-96 bg-primary/5 rounded-full blur-3xl"></div>
+            <div class="absolute bottom-[20%] right-[10%] w-96 h-96 bg-blue-400/5 rounded-full blur-3xl"></div>
+        </div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-16 text-center relative z-10">
+            <span class="text-primary font-bold tracking-wider uppercase text-xs mb-3 block">Rekomendacje</span>
+            <h2 class="text-3xl md:text-5xl font-bold text-slate-900 mb-6">Co mówią klienci?</h2>
+            <p class="text-slate-600 text-lg max-w-2xl mx-auto">
+                Zaufanie to podstawa. Oto kilka słów od osób, z którymi miałem przyjemność współpracować przy ostatnich projektach.
+            </p>
+        </div>
+
+        <!-- Marquee Container -->
+        <div class="relative w-full mask-gradient">
+            <div class="flex w-max animate-marquee hover:pause py-4">
+                <!-- Set 1 of Cards -->
+                <div class="flex space-x-8 px-4">
+                    
+                    <!-- Review 1 -->
+                    <div class="w-[350px] md:w-[450px] bg-white p-10 rounded-[2.5rem] shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100 flex flex-col justify-between mx-2 relative overflow-hidden group hover:-translate-y-1 transition-transform duration-300">
+                        <!-- Big Quote Icon Background -->
+                        <div class="absolute -top-4 -right-4 text-slate-50 opacity-50 group-hover:text-primary/5 transition-colors duration-500">
+                            <svg width="120" height="120" fill="currentColor" viewBox="0 0 24 24"><path d="M14.017 21L14.017 18C14.017 16.8954 14.9124 16 16.017 16H19.017C19.5693 16 20.017 15.5523 20.017 15V9C20.017 8.44772 19.5693 8 19.017 8H15.017C14.4647 8 14.017 8.44772 14.017 9V11C14.017 11.5523 13.5693 12 13.017 12H12.017V5H22.017V15C22.017 18.3137 19.3307 21 16.017 21H14.017ZM5.0166 21L5.0166 18C5.0166 16.8954 5.91203 16 7.0166 16H10.0166C10.5689 16 11.0166 15.5523 11.0166 15V9C11.0166 8.44772 10.5689 8 10.0166 8H6.0166C5.46432 8 5.0166 8.44772 5.0166 9V11C5.0166 11.5523 4.56889 12 4.0166 12H3.0166V5H13.0166V15C13.0166 18.3137 10.3303 21 7.0166 21H5.0166Z"></path></svg>
+                        </div>
+                        
+                        <div class="relative z-10">
+                            <div class="flex gap-1 text-yellow-400 mb-6">
+                                <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                                <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                                <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                                <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                                <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                            </div>
+                            <p class="text-slate-700 text-lg font-medium leading-relaxed mb-8">
+                                "Współpraca przebiegła wzorowo. Strona internetowa ładuje się błyskawicznie, a design idealnie oddaje charakter naszej marki. Polecam każdemu!"
+                            </p>
+                        </div>
+                        <div class="flex items-center relative z-10 pt-6 border-t border-slate-50">
+                            <img src="https://picsum.photos/seed/user1/100/100" alt="Marek Kowalski" class="w-14 h-14 rounded-full object-cover ring-4 ring-slate-50">
+                            <div class="ml-4">
+                                <h4 class="font-bold text-slate-900 text-base">Marek Kowalski</h4>
+                                <p class="text-sm text-primary font-medium">CEO, TechStart</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Review 2 -->
+                    <div class="w-[350px] md:w-[450px] bg-white p-10 rounded-[2.5rem] shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100 flex flex-col justify-between mx-2 relative overflow-hidden group hover:-translate-y-1 transition-transform duration-300">
+                        <div class="absolute -top-4 -right-4 text-slate-50 opacity-50 group-hover:text-primary/5 transition-colors duration-500">
+                            <svg width="120" height="120" fill="currentColor" viewBox="0 0 24 24"><path d="M14.017 21L14.017 18C14.017 16.8954 14.9124 16 16.017 16H19.017C19.5693 16 20.017 15.5523 20.017 15V9C20.017 8.44772 19.5693 8 19.017 8H15.017C14.4647 8 14.017 8.44772 14.017 9V11C14.017 11.5523 13.5693 12 13.017 12H12.017V5H22.017V15C22.017 18.3137 19.3307 21 16.017 21H14.017ZM5.0166 21L5.0166 18C5.0166 16.8954 5.91203 16 7.0166 16H10.0166C10.5689 16 11.0166 15.5523 11.0166 15V9C11.0166 8.44772 10.5689 8 10.0166 8H6.0166C5.46432 8 5.0166 8.44772 5.0166 9V11C5.0166 11.5523 4.56889 12 4.0166 12H3.0166V5H13.0166V15C13.0166 18.3137 10.3303 21 7.0166 21H5.0166Z"></path></svg>
+                        </div>
+                        <div class="relative z-10">
+                            <div class="flex gap-1 text-yellow-400 mb-6">
+                                <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                                <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                                <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                                <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                                <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                            </div>
+                            <p class="text-slate-700 text-lg font-medium leading-relaxed mb-8">
+                                "Montaż wideo na najwyższym poziomie. Film promocyjny przyciągnął mnóstwo nowych klientów. Kreatywność i terminowość - 10/10."
+                            </p>
+                        </div>
+                        <div class="flex items-center relative z-10 pt-6 border-t border-slate-50">
+                            <img src="https://picsum.photos/seed/user2/100/100" alt="Anna Nowak" class="w-14 h-14 rounded-full object-cover ring-4 ring-slate-50">
+                            <div class="ml-4">
+                                <h4 class="font-bold text-slate-900 text-base">Anna Nowak</h4>
+                                <p class="text-sm text-primary font-medium">Marketing Manager</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Review 3 -->
+                    <div class="w-[350px] md:w-[450px] bg-white p-10 rounded-[2.5rem] shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100 flex flex-col justify-between mx-2 relative overflow-hidden group hover:-translate-y-1 transition-transform duration-300">
+                        <div class="absolute -top-4 -right-4 text-slate-50 opacity-50 group-hover:text-primary/5 transition-colors duration-500">
+                            <svg width="120" height="120" fill="currentColor" viewBox="0 0 24 24"><path d="M14.017 21L14.017 18C14.017 16.8954 14.9124 16 16.017 16H19.017C19.5693 16 20.017 15.5523 20.017 15V9C20.017 8.44772 19.5693 8 19.017 8H15.017C14.4647 8 14.017 8.44772 14.017 9V11C14.017 11.5523 13.5693 12 13.017 12H12.017V5H22.017V15C22.017 18.3137 19.3307 21 16.017 21H14.017ZM5.0166 21L5.0166 18C5.0166 16.8954 5.91203 16 7.0166 16H10.0166C10.5689 16 11.0166 15.5523 11.0166 15V9C11.0166 8.44772 10.5689 8 10.0166 8H6.0166C5.46432 8 5.0166 8.44772 5.0166 9V11C5.0166 11.5523 4.56889 12 4.0166 12H3.0166V5H13.0166V15C13.0166 18.3137 10.3303 21 7.0166 21H5.0166Z"></path></svg>
+                        </div>
+                        <div class="relative z-10">
+                            <div class="flex gap-1 text-yellow-400 mb-6">
+                                <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                                <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                                <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                                <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                                <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                            </div>
+                            <p class="text-slate-700 text-lg font-medium leading-relaxed mb-8">
+                                "Nowe logo i identyfikacja wizualna to strzał w dziesiątkę. Otrzymujemy mnóstwo komplementów od kontrahentów."
+                            </p>
+                        </div>
+                        <div class="flex items-center relative z-10 pt-6 border-t border-slate-50">
+                            <img src="https://picsum.photos/seed/user3/100/100" alt="Piotr Wiśniewski" class="w-14 h-14 rounded-full object-cover ring-4 ring-slate-50">
+                            <div class="ml-4">
+                                <h4 class="font-bold text-slate-900 text-base">Piotr Wiśniewski</h4>
+                                <p class="text-sm text-primary font-medium">Właściciel, CoffeeHouse</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Review 4 -->
+                    <div class="w-[350px] md:w-[450px] bg-white p-10 rounded-[2.5rem] shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100 flex flex-col justify-between mx-2 relative overflow-hidden group hover:-translate-y-1 transition-transform duration-300">
+                        <div class="absolute -top-4 -right-4 text-slate-50 opacity-50 group-hover:text-primary/5 transition-colors duration-500">
+                            <svg width="120" height="120" fill="currentColor" viewBox="0 0 24 24"><path d="M14.017 21L14.017 18C14.017 16.8954 14.9124 16 16.017 16H19.017C19.5693 16 20.017 15.5523 20.017 15V9C20.017 8.44772 19.5693 8 19.017 8H15.017C14.4647 8 14.017 8.44772 14.017 9V11C14.017 11.5523 13.5693 12 13.017 12H12.017V5H22.017V15C22.017 18.3137 19.3307 21 16.017 21H14.017ZM5.0166 21L5.0166 18C5.0166 16.8954 5.91203 16 7.0166 16H10.0166C10.5689 16 11.0166 15.5523 11.0166 15V9C11.0166 8.44772 10.5689 8 10.0166 8H6.0166C5.46432 8 5.0166 8.44772 5.0166 9V11C5.0166 11.5523 4.56889 12 4.0166 12H3.0166V5H13.0166V15C13.0166 18.3137 10.3303 21 7.0166 21H5.0166Z"></path></svg>
+                        </div>
+                        <div class="relative z-10">
+                            <div class="flex gap-1 text-yellow-400 mb-6">
+                                <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                                <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                                <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                                <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                                <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                            </div>
+                            <p class="text-slate-700 text-lg font-medium leading-relaxed mb-8">
+                                "Świetny kontakt i pełne zrozumienie potrzeb klienta. Projekt został dostarczony przed czasem. Profesjonalizm w każdym calu."
+                            </p>
+                        </div>
+                        <div class="flex items-center relative z-10 pt-6 border-t border-slate-50">
+                            <img src="https://picsum.photos/seed/user4/100/100" alt="Katarzyna Wójcik" class="w-14 h-14 rounded-full object-cover ring-4 ring-slate-50">
+                            <div class="ml-4">
+                                <h4 class="font-bold text-slate-900 text-base">Katarzyna Wójcik</h4>
+                                <p class="text-sm text-primary font-medium">Freelancer</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Set 2 of Cards (Duplicate for seamless loop) -->
+                <div class="flex space-x-8 px-4">
+                    <!-- Review 1 Duplicate -->
+                    <div class="w-[350px] md:w-[450px] bg-white p-10 rounded-[2.5rem] shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100 flex flex-col justify-between mx-2 relative overflow-hidden group hover:-translate-y-1 transition-transform duration-300">
+                        <div class="absolute -top-4 -right-4 text-slate-50 opacity-50 group-hover:text-primary/5 transition-colors duration-500">
+                            <svg width="120" height="120" fill="currentColor" viewBox="0 0 24 24"><path d="M14.017 21L14.017 18C14.017 16.8954 14.9124 16 16.017 16H19.017C19.5693 16 20.017 15.5523 20.017 15V9C20.017 8.44772 19.5693 8 19.017 8H15.017C14.4647 8 14.017 8.44772 14.017 9V11C14.017 11.5523 13.5693 12 13.017 12H12.017V5H22.017V15C22.017 18.3137 19.3307 21 16.017 21H14.017ZM5.0166 21L5.0166 18C5.0166 16.8954 5.91203 16 7.0166 16H10.0166C10.5689 16 11.0166 15.5523 11.0166 15V9C11.0166 8.44772 10.5689 8 10.0166 8H6.0166C5.46432 8 5.0166 8.44772 5.0166 9V11C5.0166 11.5523 4.56889 12 4.0166 12H3.0166V5H13.0166V15C13.0166 18.3137 10.3303 21 7.0166 21H5.0166Z"></path></svg>
+                        </div>
+                        <div class="relative z-10">
+                            <div class="flex gap-1 text-yellow-400 mb-6">
+                                <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                                <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                                <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                                <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                                <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                            </div>
+                            <p class="text-slate-700 text-lg font-medium leading-relaxed mb-8">
+                                "Współpraca przebiegła wzorowo. Strona internetowa ładuje się błyskawicznie, a design idealnie oddaje charakter naszej marki. Polecam każdemu!"
+                            </p>
+                        </div>
+                        <div class="flex items-center relative z-10 pt-6 border-t border-slate-50">
+                            <img src="https://picsum.photos/seed/user1/100/100" alt="Marek Kowalski" class="w-14 h-14 rounded-full object-cover ring-4 ring-slate-50">
+                            <div class="ml-4">
+                                <h4 class="font-bold text-slate-900 text-base">Marek Kowalski</h4>
+                                <p class="text-sm text-primary font-medium">CEO, TechStart</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Review 2 Duplicate -->
+                    <div class="w-[350px] md:w-[450px] bg-white p-10 rounded-[2.5rem] shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100 flex flex-col justify-between mx-2 relative overflow-hidden group hover:-translate-y-1 transition-transform duration-300">
+                        <div class="absolute -top-4 -right-4 text-slate-50 opacity-50 group-hover:text-primary/5 transition-colors duration-500">
+                            <svg width="120" height="120" fill="currentColor" viewBox="0 0 24 24"><path d="M14.017 21L14.017 18C14.017 16.8954 14.9124 16 16.017 16H19.017C19.5693 16 20.017 15.5523 20.017 15V9C20.017 8.44772 19.5693 8 19.017 8H15.017C14.4647 8 14.017 8.44772 14.017 9V11C14.017 11.5523 13.5693 12 13.017 12H12.017V5H22.017V15C22.017 18.3137 19.3307 21 16.017 21H14.017ZM5.0166 21L5.0166 18C5.0166 16.8954 5.91203 16 7.0166 16H10.0166C10.5689 16 11.0166 15.5523 11.0166 15V9C11.0166 8.44772 10.5689 8 10.0166 8H6.0166C5.46432 8 5.0166 8.44772 5.0166 9V11C5.0166 11.5523 4.56889 12 4.0166 12H3.0166V5H13.0166V15C13.0166 18.3137 10.3303 21 7.0166 21H5.0166Z"></path></svg>
+                        </div>
+                        <div class="relative z-10">
+                            <div class="flex gap-1 text-yellow-400 mb-6">
+                                <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                                <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                                <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                                <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                                <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                            </div>
+                            <p class="text-slate-700 text-lg font-medium leading-relaxed mb-8">
+                                "Montaż wideo na najwyższym poziomie. Film promocyjny przyciągnął mnóstwo nowych klientów. Kreatywność i terminowość - 10/10."
+                            </p>
+                        </div>
+                        <div class="flex items-center relative z-10 pt-6 border-t border-slate-50">
+                            <img src="https://picsum.photos/seed/user2/100/100" alt="Anna Nowak" class="w-14 h-14 rounded-full object-cover ring-4 ring-slate-50">
+                            <div class="ml-4">
+                                <h4 class="font-bold text-slate-900 text-base">Anna Nowak</h4>
+                                <p class="text-sm text-primary font-medium">Marketing Manager</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Review 3 Duplicate -->
+                    <div class="w-[350px] md:w-[450px] bg-white p-10 rounded-[2.5rem] shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100 flex flex-col justify-between mx-2 relative overflow-hidden group hover:-translate-y-1 transition-transform duration-300">
+                        <div class="absolute -top-4 -right-4 text-slate-50 opacity-50 group-hover:text-primary/5 transition-colors duration-500">
+                            <svg width="120" height="120" fill="currentColor" viewBox="0 0 24 24"><path d="M14.017 21L14.017 18C14.017 16.8954 14.9124 16 16.017 16H19.017C19.5693 16 20.017 15.5523 20.017 15V9C20.017 8.44772 19.5693 8 19.017 8H15.017C14.4647 8 14.017 8.44772 14.017 9V11C14.017 11.5523 13.5693 12 13.017 12H12.017V5H22.017V15C22.017 18.3137 19.3307 21 16.017 21H14.017ZM5.0166 21L5.0166 18C5.0166 16.8954 5.91203 16 7.0166 16H10.0166C10.5689 16 11.0166 15.5523 11.0166 15V9C11.0166 8.44772 10.5689 8 10.0166 8H6.0166C5.46432 8 5.0166 8.44772 5.0166 9V11C5.0166 11.5523 4.56889 12 4.0166 12H3.0166V5H13.0166V15C13.0166 18.3137 10.3303 21 7.0166 21H5.0166Z"></path></svg>
+                        </div>
+                        <div class="relative z-10">
+                            <div class="flex gap-1 text-yellow-400 mb-6">
+                                <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                                <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                                <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                                <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                                <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                            </div>
+                            <p class="text-slate-700 text-lg font-medium leading-relaxed mb-8">
+                                "Świetny kontakt i pełne zrozumienie potrzeb klienta. Projekt został dostarczony przed czasem. Profesjonalizm w każdym calu."
+                            </p>
+                        </div>
+                        <div class="flex items-center relative z-10 pt-6 border-t border-slate-50">
+                            <img src="https://picsum.photos/seed/user4/100/100" alt="Katarzyna Wójcik" class="w-14 h-14 rounded-full object-cover ring-4 ring-slate-50">
+                            <div class="ml-4">
+                                <h4 class="font-bold text-slate-900 text-base">Katarzyna Wójcik</h4>
+                                <p class="text-sm text-primary font-medium">Freelancer</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACT SECTION -->
+    <section id="kontakt" class="py-24 bg-secondary/30">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-5xl font-bold text-slate-900 mb-6">Skontaktuj się</h2>
+                <p class="text-slate-600 text-lg max-w-2xl mx-auto">
+                    Masz pomysł na projekt? Chcesz nawiązać współpracę? Skopiuj moje dane kontaktowe poniżej.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                <!-- Email Card -->
+                <div class="bg-white rounded-[2rem] p-8 shadow-xl border border-slate-100 flex flex-col items-center text-center hover:-translate-y-1 transition duration-300 group">
+                    <div class="w-16 h-16 bg-primary/10 text-primary rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition duration-300">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                    </div>
+                    <h3 class="text-2xl font-bold text-slate-900 mb-2">Email</h3>
+                    <p class="text-slate-500 mb-8">Skopiuj adres, aby wysłać wiadomość.</p>
+                    
+                    <div class="w-full bg-slate-50 p-2 rounded-xl border border-slate-200 flex items-center justify-between pl-4 group-hover:border-primary/30 transition">
+                        <span class="font-mono text-slate-700 font-medium select-all truncate mr-2">xfazi.pl@gmail.com</span>
+                        <button onclick="copyText('xfazi.pl@gmail.com', this)" class="bg-white px-4 py-2 rounded-lg text-sm font-bold text-slate-700 shadow-sm border border-gray-100 hover:text-primary hover:border-primary transition active:scale-95 flex-shrink-0">
+                            Kopiuj
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Discord Card -->
+                <div class="bg-white rounded-[2rem] p-8 shadow-xl border border-slate-100 flex flex-col items-center text-center hover:-translate-y-1 transition duration-300 group">
+                    <div class="w-16 h-16 bg-[#5865F2]/10 text-[#5865F2] rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition duration-300">
+                        <!-- Discord Icon -->
+                        <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037 13.46 13.46 0 0 0-.59 1.227 18.355 18.355 0 0 0-7.534 0 13.449 13.449 0 0 0-.593-1.227.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.674 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg>
+                    </div>
+                    <h3 class="text-2xl font-bold text-slate-900 mb-2">Discord</h3>
+                    <p class="text-slate-500 mb-8">Dodaj mnie do znajomych, aby porozmawiać.</p>
+                    
+                    <div class="w-full bg-slate-50 p-2 rounded-xl border border-slate-200 flex items-center justify-between pl-4 group-hover:border-[#5865F2]/30 transition">
+                        <span class="font-mono text-slate-700 font-medium select-all truncate mr-2">x_fazi.m</span>
+                        <button onclick="copyText('x_fazi.m', this)" class="bg-white px-4 py-2 rounded-lg text-sm font-bold text-slate-700 shadow-sm border border-gray-100 hover:text-[#5865F2] hover:border-[#5865F2] transition active:scale-95 flex-shrink-0">
+                            Kopiuj
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="footer" class="bg-white border-t border-gray-100 pt-16 pb-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-start gap-12 mb-12">
+                <!-- Left Side: Logo, Text, YouTube -->
+                <div class="max-w-sm">
+                    <a href="#" class="text-2xl font-bold tracking-tight text-slate-900 mb-4 block">
+                        Kreator<span class="text-primary">.</span>
+                    </a>
+                    <p class="text-slate-500 mb-6">
+                        Tworzę cyfrowe rozwiązania dla nowoczesnych marek. Skontaktuj się ze mną, aby omówić Twój kolejny projekt.
+                    </p>
+                    <!-- Socials: YouTube Only -->
+                    <div class="flex space-x-4">
+                        <a href="#" class="w-10 h-10 rounded-full bg-secondary flex items-center justify-center text-slate-600 hover:bg-primary hover:text-white transition group">
+                            <span class="sr-only">YouTube</span>
+                            <svg class="h-5 w-5 fill-current" viewBox="0 0 24 24"><path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z"/></svg>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Right Side: Menu -->
+                <div class="md:text-right">
+                    <h4 class="font-bold text-slate-900 mb-4">Menu</h4>
+                    <ul class="space-y-2 text-sm text-slate-600">
+                        <li><a href="#o-mnie" class="hover:text-primary transition">O mnie</a></li>
+                        <li><a href="#grafiki" class="hover:text-primary transition">Grafiki</a></li>
+                        <li><a href="#montaz" class="hover:text-primary transition">Montaż</a></li>
+                        <li><a href="#strony" class="hover:text-primary transition">Strony</a></li>
+                        <li><a href="#opinie" class="hover:text-primary transition">Opinie</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Bottom Copyright -->
+            <div class="border-t border-gray-100 pt-8 flex flex-col md:flex-row justify-between items-center text-sm text-slate-400">
+                <p>&copy; 2023 Kreator. Wszelkie prawa zastrzeżone.</p>
+                <div class="flex space-x-6 mt-4 md:mt-0">
+                    <a href="#" class="hover:text-slate-600">Polityka Prywatności</a>
+                    <a href="#" class="hover:text-slate-600">Regulamin</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        // Mobile Menu Toggle
+        const btn = document.getElementById('mobile-menu-btn');
+        const menu = document.getElementById('mobile-menu');
+
+        btn.addEventListener('click', () => {
+            menu.classList.toggle('hidden');
+        });
+
+        // Close mobile menu on link click
+        document.querySelectorAll('#mobile-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                menu.classList.add('hidden');
+            });
+        });
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('navbar');
+            if (window.scrollY > 10) {
+                nav.classList.add('shadow-sm');
+            } else {
+                nav.classList.remove('shadow-sm');
+            }
+        });
+
+        // --- VIDEO MODAL LOGIC ---
+        const videoModal = document.getElementById('video-modal');
+        const videoFrame = document.getElementById('video-frame');
+        const videoModalContent = document.getElementById('video-modal-content');
+
+        function openVideo(videoId) {
+            // Set the YouTube source with autoplay
+            videoFrame.src = `https://www.youtube.com/watch?v=mcd8c6uDkpg&t=24s${videoId}?autoplay=1&rel=0`;
+            
+            // Show modal container
+            videoModal.classList.remove('hidden');
+            
+            // Force reflow to ensure transition triggers
+            void videoModal.offsetWidth; 
+            
+            // Fade in background
+            videoModal.classList.remove('opacity-0');
+            
+            // Scale up content
+            videoModalContent.classList.remove('scale-95');
+            videoModalContent.classList.add('scale-100');
+            
+            // Prevent body scrolling
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeVideo() {
+            // Fade out background
+            videoModal.classList.add('opacity-0');
+            
+            // Scale down content
+            videoModalContent.classList.remove('scale-100');
+            videoModalContent.classList.add('scale-95');
+            
+            // Wait for transition to finish before hiding
+            setTimeout(() => {
+                videoModal.classList.add('hidden');
+                // Stop video by clearing src
+                videoFrame.src = '';
+            }, 300); 
+
+            // Restore body scrolling
+            document.body.style.overflow = 'auto';
+        }
+
+        // Close on Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && !videoModal.classList.contains('hidden')) {
+                closeVideo();
+            }
+        });
+
+        // --- UNIVERSAL COPY LOGIC (Email & Discord) ---
+        function copyText(text, button) {
+            // Try standard clipboard API
+            if (navigator.clipboard && window.isSecureContext) {
+                navigator.clipboard.writeText(text).then(() => {
+                    showCopySuccess(button);
+                }).catch(err => {
+                    console.error('Clipboard API failed', err);
+                    fallbackCopyText(text, button);
+                });
+            } else {
+                // Fallback for older browsers or non-secure contexts
+                fallbackCopyText(text, button);
+            }
+        }
+
+        function fallbackCopyText(text, button) {
+            const textArea = document.createElement("textarea");
+            textArea.value = text;
+            textArea.style.position = "fixed";
+            textArea.style.left = "-9999px";
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+            
+            try {
+                const successful = document.execCommand('copy');
+                if (successful) {
+                    showCopySuccess(button);
+                } else {
+                    console.error('Fallback copy failed.');
+                }
+            } catch (err) {
+                console.error('Fallback copy error', err);
+            }
+            
+            document.body.removeChild(textArea);
+        }
+
+        function showCopySuccess(button) {
+            const originalText = button.innerText;
+            button.innerText = 'Skopiowano!';
+            button.classList.add('bg-green-50', 'text-green-600', 'border-green-200');
+            
+            setTimeout(() => {
+                button.innerText = originalText;
+                button.classList.remove('bg-green-50', 'text-green-600', 'border-green-200');
+            }, 2000);
+        }
+    </script>
+</body>
+</html>
